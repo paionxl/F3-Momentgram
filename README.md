@@ -1,5 +1,5 @@
 # F3-Momentgram
-Repository for group F3 for Momentgram
+Repository for group F3 for Momentgram.
 
 Description of issue tags
 
