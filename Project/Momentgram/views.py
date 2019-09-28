@@ -8,4 +8,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the Momentgram home page.")
+    return render(request, 'Momentgram/register.html')
