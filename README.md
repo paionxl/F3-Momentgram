@@ -11,5 +11,5 @@ Y is the sprint number
 
 XX number of issue
 
-prova:ling
+prova
 

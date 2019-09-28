@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+	url(r'', include('Momentgram.urls')),
     url(r'^Momentgram/', include('Momentgram.urls')),
     url(r'^admin/', admin.site.urls),
 ]
