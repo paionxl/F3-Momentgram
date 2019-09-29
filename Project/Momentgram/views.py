@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 import pyrebase
+from django.shortcuts import render
 
 config = {
     'apiKey': "AIzaSyCQRNHU0SMwMws_Zt5NZCR0q0XOTL5MY9M",
@@ -16,9 +17,10 @@ auth = firebase.auth()
 
 def index(request):
     return render(request, 'Momentgram/register.html')
+
 def signUp(request):
-    email=request.POST.get('email')
-    password=request.POST.get('pass')
+    email = request.POST.get('email')
+    password = request.POST.get('psw')
 
     auth.create_user_with_email_and_password(email, password)
     return HttpResponse("Welcome" + email + "to Momentgram")
