@@ -115,24 +115,29 @@
             <img style="width:100%" src="https://image.flaticon.com/icons/svg/702/702008.svg" alt="Avatar" class="avatar">
         </div>
 
-        <form action="{% url 'init' %}"method="post">
+         <form  method="post" action="{% url 'init' %}">
             {% csrf_token %}
-
-            <div class="container">
-                <label class="input-label">Username</label>
-                <input class="input" type="text" placeholder="Username" name="uname" required>
+            <div style="font: rgb(0,0,0);">
+                <div class="container">
                 <label class="input-label">Mail</label>
-                <input class="input" type="email" placeholder="Mail" name="uemail" required>
+                <input class="input" type="email" placeholder="Mail" name="email" required>
+
+                <label class="input-label">Name</label>
+                <input class="input" type="text" placeholder="Name" name="Name" required>
+                
+                <label class="input-label">Username</label>
+                <input class="input" type="text" placeholder="Username" name="username" required>
+                
                 <label class="input-label">Password</label>
-                <input id="psw" class="input" type="password" placeholder="Enter Password" name="psw" required>
-                <label class="input-label">Confirm Password</label>
-                <input id="repsw" class="input" type="password" placeholder="Confirm Password" name="repsw" required>
-                <button id="register" onclick="passValidation()" type="submit">Sign up</button>
-                <!--<label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label>-->
+                <input id="password" class="input" type="password" placeholder="Enter Password" name="password" required>
+                <button id="register"  type="submit">Sign up</button>
+            
             </div>
-        </form>
+
+        
+          </form>
+
+
         <!--
         <div class="container" style="background-color:#f1f1f1">
             <button type="button" class="cancelbtn">Cancel</button>
@@ -157,8 +162,8 @@
 
 
     function passValidation(){
-        var psw   = document.getElementById('psw').value,
-            repsw = document.getElementById('repsw').value;
+        var psw   = document.getElementById('password1').value,
+            repsw = document.getElementById('password2').value;
         if (psw != repsw) {
             $('#psw').attr("style","border: 2px solid red");
             $('#repsw').attr("style","border: 2px solid red");
