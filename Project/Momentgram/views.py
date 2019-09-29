@@ -15,8 +15,7 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the Momentgram home page.")
-
+    return render(request, 'Momentgram/register.html')
 def signUp(request):
     email=request.POST.get('email')
     password=request.POST.get('pass')
