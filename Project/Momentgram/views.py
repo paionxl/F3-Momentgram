@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.shortcuts import render
 
-# Create your views here.
-from django.http import HttpResponse
 
+def home(request):
+    return render(request, 'home.html')
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the Momentgram home page.")
