@@ -22,6 +22,5 @@ def signIn(request):
         user = authenticate(username, password)
         if user:
             login(user)
-            return user # user if good, None if bad
-        else:
-            return None
+        return user # user if good, None if bad
+
