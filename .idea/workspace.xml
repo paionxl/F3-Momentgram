@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04cc5a0a-fa55-42de-a530-5ac76a8e02d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/F3-Momentgram.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/F3-Momentgram.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Momentgram/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Momentgram/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Momentgram/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Momentgram/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/Project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/Project/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
