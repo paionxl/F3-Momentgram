@@ -115,15 +115,15 @@
             <img style="width:100%" src="https://image.flaticon.com/icons/svg/702/702008.svg" alt="Avatar" class="avatar">
         </div>
 
-         <form  method="post" action="{% url 'init' %}">
+         <form  method="post" action="">
             {% csrf_token %}
-            <div style="font: rgb(0,0,0);">
-                <div class="container">
+          
+            <div class="container">
                 <label class="input-label">Mail</label>
                 <input class="input" type="email" placeholder="Mail" name="email" required>
 
                 <label class="input-label">Name</label>
-                <input class="input" type="text" placeholder="Name" name="Name" required>
+                <input class="input" type="text" placeholder="Name" name="name" required>
                 
                 <label class="input-label">Username</label>
                 <input class="input" type="text" placeholder="Username" name="username" required>

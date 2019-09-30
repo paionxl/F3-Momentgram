@@ -10,6 +10,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User,Group
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from .forms import SignUpForm
 def index(request):
@@ -19,10 +20,12 @@ def index(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password2')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
+            raw_password = form.cleaned_data.get('password')
+            #user = authenticate(username=username, password=raw_password)
+            # login(request, user)
             
+            #return redirect('init')
+            return HttpResponseRedirect(reverse("init"))
     else:
         form = SignUpForm()
 
