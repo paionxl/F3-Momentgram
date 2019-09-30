@@ -20,4 +20,8 @@ def signIn(request):
         username = request.GET.get('username')
         password = request.GET.get('password')
         user = authenticate(username, password)
-        return user # user if good, None if bad
+        if user:
+            login(user)
+            return user # user if good, None if bad
+        else:
+            return None
