@@ -1,42 +1,36 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.shortcuts import render,redirect
-
-# Create your views here.
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import auth
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User,Group
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 
-from .forms import SignUpForm
+
 def index(request):
-    #return render(request, 'Momentgram/register.html')
+    return render(request, 'Momentgram/register.html')
+
+def register(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
-            #user = authenticate(username=username, password=raw_password)
-            # login(request, user)
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        if User.objects.filter(username=username, email=email).exists():
+            print("the user already exists")
             
-            #return redirect('init')
-            return HttpResponseRedirect(reverse("init"))
-    else:
-        form = SignUpForm()
+        else:
+            user = User.objects.create_user(username, email, password)
+            return HttpResponse("Welcome to Momentgram, " + user.username)
+    return render(request, 'Momentgram/register.html')
+        
 
-    return render(request, "Momentgram/register.html", {
-        'form': form,
-    })
-
-
-
+def signIn(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        password = request.GET.get('password')
+        user = authenticate(username, password)
+        if user:
+            login(user)
+        return user # user if good, None if bad
 
 def init(request):
-    
-    return render(request, 'Momentgram/init.html')
 
+    return render(request, 'Momentgram/init.html')
