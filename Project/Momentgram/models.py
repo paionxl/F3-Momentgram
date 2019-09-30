@@ -4,8 +4,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 '''
-
-
 User in Django by deafault have the following primary attributes:
 
     - username
@@ -15,10 +13,8 @@ User in Django by deafault have the following primary attributes:
     - last name
     
 That's why I propose the following extension of the Django class AbstractUser that will allow us to
-save extra information to our usersgit 
-    
+save extra information to our usersgit  
 '''
-
 
 class User(AbstractUser):
     phone_number = models.PositiveIntegerField(max_length=9,blank=True,unique=True)
