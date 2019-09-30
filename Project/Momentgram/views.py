@@ -6,6 +6,9 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'Momentgram/register.html')
 
+def home(request):
+    return render(request, 'Momentgram/home.html')
+
 def signUp(request):
     username = request.POST.get('Name')
     email = request.POST.get('email')
