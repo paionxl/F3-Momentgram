@@ -115,6 +115,7 @@
             <img style="width:100%" src="https://image.flaticon.com/icons/svg/702/702008.svg" alt="Avatar" class="avatar">
         </div>
 
+<<<<<<< HEAD
          <form  method="post" action="done/">
             {% csrf_token %}
           
@@ -138,6 +139,22 @@
           </form>
 
 
+=======
+        <div class="container">
+            <label class="input-label">Username</label>
+            <input class="input" type="text" placeholder="Username" name="uname" required>
+            <label class="input-label">Mail</label>
+            <input class="input" type="email" placeholder="Mail" name="uemail" required>
+            <label class="input-label">Password</label>
+            <input id="psw" class="input" type="password" placeholder="Enter Password" name="psw" required>
+            <label class="input-label">Confirm Password</label>
+            <input id="repsw" class="input" type="password" placeholder="Confirm Password" name="repsw" required>
+            <button id="register" onclick="passValidation()" type="submit">Login</button>
+            <!--<label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>-->
+        </div>
+>>>>>>> 01980efdb01ec644d4ab27eee396143f529f75d7
         <!--
         <div class="container" style="background-color:#f1f1f1">
             <button type="button" class="cancelbtn">Cancel</button>
@@ -162,8 +179,13 @@
 
 
     function passValidation(){
+<<<<<<< HEAD
         var psw   = document.getElementById('password1').value,
             repsw = document.getElementById('password2').value;
+=======
+        var psw   = document.getElementById('psw').value,
+            repsw = document.getElementById('repsw').value;
+>>>>>>> 01980efdb01ec644d4ab27eee396143f529f75d7
         if (psw != repsw) {
             $('#psw').attr("style","border: 2px solid red");
             $('#repsw').attr("style","border: 2px solid red");
