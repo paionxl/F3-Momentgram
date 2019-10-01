@@ -17,8 +17,7 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         if User.objects.filter(username=username, email=email).exists():
-            print("the user already exists")
-            
+            return HttpResponse("Username: " + username + " in use. Please try another one.")
         else:
             user = User.objects.create_user(username, email, password)
             return HttpResponse("Welcome to Momentgram, " + user.username)
