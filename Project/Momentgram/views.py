@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 
 
 
@@ -22,7 +23,6 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             return HttpResponse("Welcome to Momentgram, " + user.username)
     return render(request, 'Momentgram/register.html')
-        
 
 def signIn(request):
     if request.method == 'GET':
@@ -33,6 +33,8 @@ def signIn(request):
             login(user)
         return user # user if good, None if bad
 
+
 def init(request):
 
     return render(request, 'Momentgram/init.html')
+
