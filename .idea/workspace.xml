@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04cc5a0a-fa55-42de-a530-5ac76a8e02d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/F3-Momentgram.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/F3-Momentgram.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Momentgram/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Momentgram/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/Momentgram/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Momentgram/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,7 +72,7 @@
       <workItem from="1569838749500" duration="400000" />
       <workItem from="1569839554337" duration="793000" />
       <workItem from="1570030099692" duration="149000" />
-      <workItem from="1570030332353" duration="874000" />
+      <workItem from="1570030332353" duration="1501000" />
     </task>
     <servers />
   </component>

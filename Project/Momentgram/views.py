@@ -34,6 +34,5 @@ def signIn(request):
 
 
 def init(request):
-
     return render(request, 'Momentgram/init.html')
 
