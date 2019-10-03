@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 
 
 def index(request):
-    return render(request, 'Momentgram/register.html')
+    return render(request, 'Momentgram/init.html')
 
 def register(request):
     if request.method == 'POST':
@@ -34,6 +34,5 @@ def signIn(request):
 
 
 def init(request):
-
     return render(request, 'Momentgram/init.html')
 

@@ -1,16 +1,123 @@
 <!DOCTYPE html>
-
-
-
-<html lang="en">
+<html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif; color: dimgrey;}
+        .big-form {border: 3px solid #f1f1f1;}
 
+        input[type=text], input[type=password], input[type=email]{
+            width: 100%;
+            padding: 4px;
+            margin: 0 0 8px 0;
+            display: inline-block;
+            border-radius: 3px;
+            box-sizing: border-box;
+            color: #262626;
+            border: 1px solid #efefef;
+            background: #fafafa;
+            font-size: 12px;
+
+        }
+        input {
+            border-radius: 3px;
+        }
+        .input-label {
+            font-size: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+        button:disabled{
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        .imgcontainer {
+            width: 80%;
+            text-align: center;
+            margin: 24px 0 12px 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            padding: 30px;
+
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+        .login-container {
+            width: 350px;
+            height: 500px;
+            border: 1px solid #e6e6e6;
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .title {
+            text-align: center;
+            color: #3897f0;
+        }
+        #register, #login {
+            background-color:#3897f0;
+            border-radius: 3px;
+            font-weight: bolder;
+        }
+        h4 {
+            padding-left: 20px;
+            padding-right: 20px
+        }
+    </style>
 </head>
-
-<body>
-
-	 <h1> Welcome to Momentgram</h1>
+<body style="background-color: whitesmoke">
+<div>
+    <div class="login-container">
+        <h2 class="title">Momentgram</h2>
+        <h4>Sign up to see photos and videos from your friends.</h4>
+        <div class="imgcontainer">
+            <img style="width:100%" src="https://www.abc.net.au/news/image/9298152-3x2-700x467.jpg" class="image">
+        </div>
+        <div class="container">
+            <button id="register" type="submit">Sign up</button>
+            <button id="login" type="submit">Log in</button>
+        </div>
+    </div>
+</div>
+<script>
+</script>
 </body>
-</html> 
+</html>
