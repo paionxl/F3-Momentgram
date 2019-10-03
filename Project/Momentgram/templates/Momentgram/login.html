@@ -53,19 +53,15 @@
 
         }
 
-        span.psw {
-            float: right;
-            padding-top: 16px;
+
+        a.psw:hover{
+                
+            text-decoration:underline;
+                 
         }
 
-        /* Change styles for span and cancel button on extra small screens */
-        @media screen and (max-width: 300px) {
-            span.psw {
-                display: block;
-                float: none;
-            }
-            
-        }
+
+
         .login-container {
             width: 350px;
             height: auto;
@@ -87,10 +83,23 @@
         
         #login{
             background-color:#3897f0;
-            border-radius: 3px;
+            border-radius: 2px;
             font-weight: bolder;
         }
-        
+
+        .one {
+            color: #262626;
+            font-size: 14px;
+            margin: 15px;
+            text-align: center;
+        }
+        .two{
+            
+            display: inline !important;
+            margin: 0 !important;
+            color: #3897f0;
+
+        }
 
     </style>
 </head>
@@ -106,10 +115,10 @@
           
             <div class="container">
 
-                <label class="input-label">Username</label>
+                
                 <input class="input" type="text" placeholder="Username" name="username" required>
                 
-                <label class="input-label">Password</label>
+                
                 <input id="password" class="input" type="password" placeholder="Enter Password" name="password" required>
                 <button id="login"  type="submit">Login</button>
             
@@ -118,8 +127,9 @@
         
         </form>
         
-        <div class="container" style="background-color:#f1f1f1">
-            <span class="psw">Forgot <a href="#">password?</a></span>
+        <div class="container" >
+
+            <a class="psw" href="#" style=" text-decoration: none; color: #003569;; text-align: center; margin-left: 30%; font-size: 12px"> Forgot your password?</a>
         </div>
 
         
@@ -129,9 +139,11 @@
 
 <div>
     <div class="login-container">
-        <form action="{% url 'register' %}">
-                    <button>  <span> Don't have an acount ?</span> Sign Up</button>
-        </form>
+        <p class="one">
+            Don't have an acount ?
+            <a class="two" href="{% url 'register' %}" tyle="font-size: 14px; line-height: 18px; text-decoration: none;">Sign Up
+            </a>
+        </p>
     </div>
 </div>
 
