@@ -24,14 +24,14 @@ def register(request):
     return render(request, 'Momentgram/register.html')
 
 def signIn(request):
-    if request.method == 'GET':
-        username = request.GET.get('username')
-        password = request.GET.get('password')
-        user = authenticate(username, password)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username= username, password=password)
         if user:
             login(user)
         return user # user if good, None if bad
-
+    return render(request, 'Momentgram/login.html')
 
 def init(request):
     return render(request, 'Momentgram/init.html')
