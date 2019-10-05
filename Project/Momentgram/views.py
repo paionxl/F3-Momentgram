@@ -5,11 +5,16 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate
-
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return render(request, 'Momentgram/register.html')
+    return render(request, 'Momentgram/init.html')
+
+@login_required
+def entry(reques):
+    return render(request, 'Momentgram/entry.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -28,11 +33,20 @@ def signIn(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username= username, password=password)
+
+
         if user:
-            login(user)
-        return user # user if good, None if bad
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('entry'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return HttpResponse("Invalid login details given")
+       
+     
     return render(request, 'Momentgram/login.html')
 
-def init(request):
-    return render(request, 'Momentgram/init.html')
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {font-family: Arial, Helvetica, sans-serif; color: dimgrey;}
-        form {border: 3px solid #f1f1f1;}
+        .big-form {border: 3px solid #f1f1f1;}
 
         input[type=text], input[type=password], input[type=email]{
             width: 100%;
@@ -88,9 +88,10 @@
         }
         .login-container {
             width: 350px;
-            height: 600px;
+            height: auto;
             border: 1px solid #e6e6e6;
-            background-color: white;
+            border-radius: 1px;
+            background-color: #fff;
             margin-left: auto;
             margin-right: auto;
         }
@@ -104,11 +105,30 @@
             margin-bottom: 20px;
             color: #000;
         }
-        }
+        
         #register {
             background-color:#3897f0;
             border-radius: 3px;
             font-weight: bolder;
+        }
+        h4 {
+            padding-left: 20px;
+            padding-right: 20px
+        }
+
+
+        .one {
+            color: #262626;
+            font-size: 14px;
+            margin: 15px;
+            text-align: center;
+        }
+        .two{
+            
+            display: inline !important;
+            margin: 0 !important;
+            color: #3897f0;
+
         }
     </style>
 </head>
@@ -116,40 +136,37 @@
 <div>
     <div class="login-container">
         <h2 class="title">Momentgram</h2>
-        <h4 style="padding-left: 20px; padding-right: 20px">Sign up to see photos and videos from your friends.</h4>
+        <h2 style="color:#999; text-align: center; font-size: 15px;">Sign up to see photos and videos from your friends.</h2>
 
-        <div class="imgcontainer">
-            <img style="width:100%" src="https://image.flaticon.com/icons/svg/702/702008.svg" alt="Avatar" class="avatar">
-        </div>
-
-
-         <form  method="post" action="done/">
+        <form  method="post" action="">
             {% csrf_token %}
-          
+
             <div class="container">
-                <label class="input-label">Mail</label>
+                
                 <input class="input" type="email" placeholder="Mail" name="email" required>
 
-                <label class="input-label">Name</label>
+                
                 <input class="input" type="text" placeholder="Name" name="name" required>
-                
-                <label class="input-label">Username</label>
+
+               
                 <input class="input" type="text" placeholder="Username" name="username" required>
-                
-                <label class="input-label">Password</label>
+
                 <input id="password" class="input" type="password" placeholder="Enter Password" name="password" required>
                 <button id="register"  type="submit">Sign up</button>
-            
+
             </div>
-
+        </form>
         
-          </form>
 
-        <!--
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>-->
+        <div>
+            <div class="login-container">
+                <p class="one">
+                    Have an acount ?
+                    <a class="two" href="{% url 'signIn' %}" tyle="font-size: 14px; line-height: 18px; text-decoration: none;">Sign In
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -166,8 +183,6 @@
             })
         }
     });
-
-
 </script>
 </body>
 </html>

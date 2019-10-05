@@ -109,8 +109,7 @@
         <h2 class="title">Momentgram</h2>
     
 
-
-         <form  method="post" action="done/">
+         <form  method="post" >
             {% csrf_token %}
           
             <div class="container">
@@ -120,7 +119,7 @@
                 
                 
                 <input id="password" class="input" type="password" placeholder="Enter Password" name="password" required>
-                <button id="login"  type="submit">Login</button>
+                <button id="login"  type="submit">Sign In</button>
             
             </div>
 
