@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 
+from .forms import PostUploadForm
+from .models import Post
 
 
 def index(request):
@@ -31,6 +33,20 @@ def signIn(request):
         if user:
             login(user)
         return user # user if good, None if bad
+
+def upload_post(request):
+    if request.method == 'POST':
+        form = PostUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = Post.objects.get(pk='post_id')
+            post.image = form.cleaned_data['image']
+            post.description = form.cleaned_data['description']
+            post.num_likes = form.cleaned_data['likes']
+            post.user = form.cleaned_data['username']
+            post.save()
+            return HttpResponse('image upload success')
+    return HttpResponse('allowed only via POST')
+
 
 
 def init(request):

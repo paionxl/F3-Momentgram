@@ -9,6 +9,13 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     web = models.TextField(max_length=500, blank=True)
 
+class Post(models.Model):
+    image = models.ImageField(upload_to='posts/')
+    description = models.TextField(max_length=500, blank=True)
+    num_likes = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
