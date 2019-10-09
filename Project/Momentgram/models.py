@@ -4,10 +4,19 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Profile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     web = models.TextField(max_length=500, blank=True)
+    postlist = []
+
+    def addPost(self, post):
+        if isinstance(post, Post):
+            self.postlist.append(post)
+        else:
+            return False
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -24,6 +33,6 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return self.title
+        return self.description
 
 
