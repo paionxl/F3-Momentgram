@@ -62,9 +62,8 @@
 
         .container {
             padding: 30px;
-
         }
-
+        
         span.psw {
             float: right;
             padding-top: 16px;
@@ -82,7 +81,9 @@
         }
         .login-container {
             width: 350px;
+
             height: auto;
+
             border: 1px solid #e6e6e6;
             background-color: white;
             margin-left: auto;
@@ -98,7 +99,8 @@
             margin-bottom: 20px;
             color: #000;
         }
-        
+
+
         #register, #login {
             background-color:#3897f0;
             border-radius: 3px;
@@ -114,6 +116,9 @@
 <div>
     <div class="login-container">
         <h2 class="title">Momentgram</h2>
+
+        <h4>Sign up to see photos and videos from your friends.</h4>
+
         <div class="imgcontainer">
             <img style="width:100%" src="https://www.abc.net.au/news/image/9298152-3x2-700x467.jpg" class="image">
         </div>
@@ -122,6 +127,7 @@
 
             <a href="{% url 'register' %}"><button id="register" >Sign Up</button></a>
             <a href="{% url 'signIn' %}"><button id="signIn" type="submit">Sign In</button></a>
+
         </div>
     </div>
 </div>

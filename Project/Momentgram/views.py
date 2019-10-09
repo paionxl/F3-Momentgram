@@ -4,8 +4,12 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth import authenticate, login
+
 
 
 def index(request):
@@ -21,8 +25,8 @@ def register(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        if User.objects.filter(username=username, email=email).exists():
-            return HttpResponse("Username: " + username + " in use. Please try another one.")
+        if User.objects.filter(username=username).exists() or User.objects.filter(email = email).exists():
+            return HttpResponse("Username: " + username + "or mail: " + email +  " in use. Please try another one.")
         else:
             user = User.objects.create_user(username, email, password)
             return HttpResponse("Welcome to Momentgram, " + user.username)
@@ -32,19 +36,15 @@ def signIn(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username= username, password=password)
 
-
+        user = authenticate(username=username, password = password)
         if user:
-            if user.is_active:
-                login(request,user)
-                return HttpResponseRedirect(reverse('entry'))
-            else:
-                return HttpResponse("Your account was inactive.")
+            login(request, user = user)
+            return HttpResponse("logged in")
         else:
-            print("Someone tried to login and failed.")
-            print("They used username: {} and password: {}".format(username,password))
-            return HttpResponse("Invalid login details given")
+            return HttpResponse("Failed. Username or password not correct")
+    return render(request, 'Momentgram/login.html')
+
        
      
     return render(request, 'Momentgram/login.html')
