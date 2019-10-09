@@ -27,6 +27,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/')
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.description
