@@ -45,8 +45,5 @@ def signIn(request):
             return HttpResponse("Failed. Username or password not correct")
     return render(request, 'Momentgram/login.html')
 
-       
-     
-    return render(request, 'Momentgram/login.html')
 
 
