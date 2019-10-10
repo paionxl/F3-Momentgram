@@ -4,13 +4,21 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth import authenticate, login
 
 
 
-
 def index(request):
-    return render(request, 'Momentgram/register.html')
+    return render(request, 'Momentgram/init.html')
+
+@login_required
+def entry(reques):
+    return render(request, 'Momentgram/entry.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -28,6 +36,7 @@ def signIn(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+
         user = authenticate(username=username, password = password)
         if user:
             login(request, user = user)
@@ -36,6 +45,5 @@ def signIn(request):
             return HttpResponse("Failed. Username or password not correct")
     return render(request, 'Momentgram/login.html')
 
-def init(request):
-    return render(request, 'Momentgram/init.html')
+
 

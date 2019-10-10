@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {font-family: Arial, Helvetica, sans-serif; color: dimgrey;}
-        .big-form {border: 3px solid #f1f1f1;}
+        form {border: 3px solid #f1f1f1;}
+
         input[type=text], input[type=password], input[type=email]{
             width: 100%;
             padding: 4px;
@@ -17,6 +18,7 @@
             border: 1px solid #efefef;
             background: #fafafa;
             font-size: 12px;
+
         }
         input {
             border-radius: 3px;
@@ -41,43 +43,25 @@
             opacity: 0.5;
             cursor: default;
         }
-        .cancelbtn {
-            width: auto;
-            padding: 10px 18px;
-            background-color: #f44336;
-        }
-        .imgcontainer {
-            width: 150px;
-            height: 150px;
-            text-align: center;
-            margin: 24px 0 12px 0;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        img.avatar {
-            width: 40%;
-            border-radius: 50%;
-        }
+
+        
         .container {
             padding: 30px;
+
         }
-        span.psw {
-            float: right;
-            padding-top: 16px;
+
+
+        a.psw:hover{
+                
+            text-decoration:underline;
+                 
         }
-        /* Change styles for span and cancel button on extra small screens */
-        @media screen and (max-width: 300px) {
-            span.psw {
-                display: block;
-                float: none;
-            }
-            .cancelbtn {
-                width: 100%;
-            }
-        }
+
+
+
         .login-container {
             width: 350px;
-            height: 600px;
+            height: auto;
             border: 1px solid #e6e6e6;
             background-color: white;
             margin-left: auto;
@@ -86,51 +70,87 @@
         .title {
             text-align: center;
             color: #3897f0;
+            font-family: 'URW Chancery L', cursive;
+            font-size: 24px;
+            font-size: 2.4rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #000;
         }
-        #register {
+        
+        #login{
             background-color:#3897f0;
-            border-radius: 3px;
+            border-radius: 2px;
             font-weight: bolder;
         }
-        h4 {
-            padding-left: 20px;
-            padding-right: 20px
+
+        .one {
+            color: #262626;
+            font-size: 14px;
+            margin: 15px;
+            text-align: center;
         }
+        .two{
+            
+            display: inline !important;
+            margin: 0 !important;
+            color: #3897f0;
+
+        }
+
     </style>
 </head>
 <body style="background-color: whitesmoke">
 <div>
     <div class="login-container">
         <h2 class="title">Momentgram</h2>
-        <h4>Sign up to see photos and videos from your friends.</h4>
 
-        <form  method="post" action="done/">
+
+         <form  method="post" >
             {% csrf_token %}
-
+          
             <div class="container">
-                <label class="input-label">Mail</label>
-                <input class="input" type="email" placeholder="Mail" name="email" required>
 
-                <label class="input-label">Name</label>
-                <input class="input" type="text" placeholder="Name" name="name" required>
-
-                <label class="input-label">Username</label>
+                
                 <input class="input" type="text" placeholder="Username" name="username" required>
-
-                <label class="input-label">Password</label>
+                
+                
                 <input id="password" class="input" type="password" placeholder="Enter Password" name="password" required>
-                <button id="register"  type="submit">Log in</button>
-
+                <button id="login"  type="submit">Sign In</button>
+            
             </div>
+
+        
         </form>
-        <h4>Have an account? <a href=../signup>Log in</a></h4>
+        
+        <div class="container" >
+
+            <a class="psw" href="#" style=" text-decoration: none; color: #003569;; text-align: center; margin-left: 30%; font-size: 12px"> Forgot your password?</a>
+        </div>
+
+        
     </div>
 </div>
+
+
+<div>
+    <div class="login-container">
+        <p class="one">
+            Don't have an acount ?
+            <a class="two" href="{% url 'signup' %}" tyle="font-size: 14px; line-height: 18px; text-decoration: none;">Sign Up
+            </a>
+        </p>
+    </div>
+</div>
+
+
 <script>
     $(document).ready(function(){
         let inputs = document.querySelectorAll('.input'),
-            knapp = document.querySelector('#register')
+            knapp = document.querySelector('#login')
         knapp.disabled = true
+
+
         for (i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener('input',() => {
                 let values = []
@@ -139,6 +159,9 @@
             })
         }
     });
+
+
+
 </script>
 </body>
 </html>

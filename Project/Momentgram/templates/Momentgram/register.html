@@ -6,6 +6,7 @@
     <style>
         body {font-family: Arial, Helvetica, sans-serif; color: dimgrey;}
         .big-form {border: 3px solid #f1f1f1;}
+
         input[type=text], input[type=password], input[type=email]{
             width: 100%;
             padding: 4px;
@@ -77,16 +78,26 @@
         }
         .login-container {
             width: 350px;
-            height: 500px;
+
+            height: auto;
+
             border: 1px solid #e6e6e6;
-            background-color: white;
+            border-radius: 1px;
+            background-color: #fff;
             margin-left: auto;
             margin-right: auto;
         }
         .title {
             text-align: center;
             color: #3897f0;
+            font-family: 'URW Chancery L', cursive;
+            font-size: 24px;
+            font-size: 2.4rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #000;
         }
+        
         #register {
             background-color:#3897f0;
             border-radius: 3px;
@@ -96,19 +107,37 @@
             padding-left: 20px;
             padding-right: 20px
         }
+
+        .one {
+            color: #262626;
+            font-size: 14px;
+            margin: 15px;
+            text-align: center;
+        }
+        .two{
+            
+            display: inline !important;
+            margin: 0 !important;
+            color: #3897f0;
+
+        }
+
     </style>
 </head>
 <body style="background-color: whitesmoke">
 <div>
     <div class="login-container">
         <h2 class="title">Momentgram</h2>
-        <h4>Sign up to see photos and videos from your friends.</h4>
+
+        <h2 style="color:#999; text-align: center; font-size: 15px;">Sign up to see photos and videos from your friends.</h2>
+
 
         <form  method="post" action="done/">
+
             {% csrf_token %}
 
             <div class="container">
-                <label class="input-label">Mail</label>
+                
                 <input class="input" type="email" placeholder="Mail" name="email" required>
 
                 <label class="input-label">Name</label>
@@ -118,12 +147,24 @@
                 <input class="input" type="text" placeholder="Username" name="username" required>
 
                 <label class="input-label">Password</label>
+
                 <input id="password" class="input" type="password" placeholder="Enter Password" name="password" required>
                 <button id="register"  type="submit">Sign up</button>
 
             </div>
         </form>
-        <h4>Have an account? <a href=../login>Log in</a></h4>
+
+
+        <div>
+            <div class="login-container">
+                <p class="one">
+                    Have an acount ?
+                    <a class="two" href="{% url 'login' %}" tyle="font-size: 14px; line-height: 18px; text-decoration: none;">Sign In
+                    </a>
+                </p>
+            </div>
+        </div>
+
     </div>
 </div>
 <script>
