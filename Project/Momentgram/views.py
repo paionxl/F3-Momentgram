@@ -27,7 +27,7 @@ def register(request):
             return HttpResponse("Username: " + username + "or mail: " + email +  " in use. Please try another one.")
         else:
             user = User.objects.create_user(username, email, password)
-            return HttpResponseRedirect(reverse("signIn"))
+            return HttpResponseRedirect(reverse('login'))
     return render(request, 'Momentgram/register.html')
 
 
