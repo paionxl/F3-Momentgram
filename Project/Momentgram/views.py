@@ -69,17 +69,23 @@ def log_out(request):
 
 @login_required
 def publish_post(request):
-    if request.method == POST:
+    if request.method == 'POST':
         date = datetime.now()
         url = request.POST.get('url')
-        descr = request.POST.GET('description')
+        description = request.POST.GET('description')
         post = Post()
+        post.description = description
+        post.image = url
+        post.user = request.user
+        post.date = date
         post.save()
         context ={
-            'username' : request.user.username
-
-
+            'username' : post.user.username,
+            'description' : post.description,
+            'image' : post.image,
+            'date' : post.date
         }
+        return render(request, 'Momentgram/post_visualitzation.html', context)
 
 
 
