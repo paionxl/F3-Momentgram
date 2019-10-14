@@ -40,11 +40,11 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <!-- Falta posar nom -->
-                <p class="nav-link" style="margin-bottom:0px">Hi ?????</p>
+                <p class="nav-link" style="margin-bottom:0px">Hi {{ user.get_username }}</p>
             </li>
             <li class="nav-item active">
                 <!-- Logout -->
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
         </ul>
     </nav>

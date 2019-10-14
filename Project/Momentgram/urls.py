@@ -12,7 +12,9 @@ urlpatterns = [
     url(r'^login/$', views.signIn, name='login'),
     url(r'^signup/$', views.register, name='signup'),
     url(r'^signup/done/$', views.register, name='doner'),
-    url(r'^login/done/$', views.signIn, name='donel')
+    url(r'^login/done/$', views.signIn, name='donel'),
+    url(r'^view/$', views.view_post, name='viewP'),
+    url(r'^logout/$', views.log_out, name='logout')
     #path('admin/', admin.site.urls),
     #path('', include('posts.urls'))
 

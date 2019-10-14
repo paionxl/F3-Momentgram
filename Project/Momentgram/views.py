@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from Momentgram.models import Profile
+from Momentgram.models import Profile, Post
+from datetime import datetime
 
 
 
@@ -16,6 +17,9 @@ def index(request):
 def entry(request):
     return render(request, 'Momentgram/entry.html')
 
+@login_required
+def view_post(request):
+    return render(request, 'Momentgram/post_visualitzation.html')
 
 def register(request):
 
@@ -36,14 +40,13 @@ def register(request):
         return render(request, 'Momentgram/register.html')
 
 def signIn(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password = password)
         if user:
             login(request, user = user)
-            if(request.session['next']):
+            if 'next' in request.session:
                 next = request.session['next']
                 request.session['next'] = None
                 return redirect(next)
@@ -59,10 +62,24 @@ def signIn(request):
             request.session['next'] = request.GET.get('next', '/')
         return render(request, 'Momentgram/login.html')
 
+@login_required
 def log_out(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('login')
+    logout(request)
+    return redirect('login')
+
+@login_required
+def publish_post(request):
+    if request.method == POST:
+        date = datetime.now()
+        url = request.POST.get('url')
+        descr = request.POST.GET('description')
+        post = Post()
+        post.save()
+        context ={
+            'username' : request.user.username
+
+
+        }
 
 
 
