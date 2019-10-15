@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from Momentgram.models import Profile, Post
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 
@@ -71,22 +71,24 @@ def log_out(request):
 def publish_post(request):
     if request.method == 'POST':
         date = datetime.now()
-        url = request.POST.get('url')
-        description = request.POST.GET('description')
+        image_name = request.FILES['image'].name
+        image = request.FILES['image']
+        description = request.POST.get('description')
         post = Post()
         post.description = description
-        post.image = url
+        post.image = image
         post.user = request.user
         post.date = date
         post.save()
         context ={
             'username' : post.user.username,
             'description' : post.description,
-            'image' : post.image,
-            'date' : post.date
+            'image_name' : image_name,
+            'date' : date
         }
         return render(request, 'Momentgram/post_visualitzation.html', context)
-
+    if request.method == 'GET':
+        return render(request, 'Momentgram/post.html')
 
 
 

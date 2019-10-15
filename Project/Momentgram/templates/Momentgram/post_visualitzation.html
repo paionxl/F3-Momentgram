@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                 <!-- A Publicar foto -->
-                <a class="nav-link" href="#">Publish post</a>
+                <a class="nav-link" href="{% url 'publish' %}">Publish post</a>
             </li>
             <li class="nav-item">
                 <!-- A See post -->
@@ -50,12 +50,13 @@
     </nav>
     <div class="row" style="padding: 10px 150px">
         <div class="col-8" style="background-color: white; padding: 10px;">
-            <img id="image" src="https://st3.depositphotos.com/1000438/13031/i/950/depositphotos_130319456-stock-photo-two-young-girls-taking-selfie.jpg" class="img-thumbnail" alt="Cinque Terre">
+
+            <img id="image" src="/media/images/{{image_name}}/"/>
         </div>
         <div class="col-4" style="background-color: white; padding: 20px">
             <p id="userName" style="font-size: 14px; font-weight: bold">{{ username }}</p>
             <p id="coment" style="font-size: 12px">{{ description }}</p>
-            <p id="url" style="font-size: 12px">{{ image }}</p>
+            <p id="url" style="font-size: 12px">{{ image_name }}</p>
             <p id="date" style="font-size: 10px">{{ date }}</p>
         </div>
     </div>
