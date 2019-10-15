@@ -12,6 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 
 
+
 def index(request):
     return render(request, 'Momentgram/init.html')
 
