@@ -9,13 +9,6 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     web = models.TextField(max_length=500, blank=True)
-    postlist = []
-
-    def addPost(self, post):
-        if isinstance(post, Post):
-            self.postlist.append(post)
-        else:
-            return False
 
 
 @receiver(post_save, sender=User)
@@ -29,10 +22,17 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Post(models.Model):
+
     description = models.TextField(max_length=500,blank=True)
     image = models.ImageField(upload_to='images/')
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.description
+
+    class Meta:
+        ordering = ('date',)
 
 

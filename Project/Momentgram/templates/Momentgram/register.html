@@ -132,12 +132,12 @@
         <h2 style="color:#999; text-align: center; font-size: 15px;">Sign up to see photos and videos from your friends.</h2>
 
 
-        <form  method="post" action="">
+        <form  method="post" action="done/">
 
             {% csrf_token %}
 
             <div class="container">
-                
+                <label class="input-label">Email</label>
                 <input class="input" type="email" placeholder="Mail" name="email" required>
 
                 <label class="input-label">Name</label>
