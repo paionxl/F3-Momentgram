@@ -37,7 +37,7 @@ def register(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return HttpResponse("You are already registered and logged in using: ") #+ request.user.username)
+            return HttpResponse("You are already registered and logged in using: "+ request.user.username)
             # if init page is done, send him there
         return render(request, 'Momentgram/register.html')
 
@@ -58,7 +58,7 @@ def signIn(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return HttpResponse("You are already logged in using: "+request.user.username)
+            return HttpResponse("You are already logged in using: " + request.user.username)
             # if init page is done, send him there
         if request.GET.get('next',''):
             request.session['next'] = request.GET.get('next', '/')
