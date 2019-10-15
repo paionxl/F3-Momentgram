@@ -34,12 +34,16 @@ def register(request):
             return HttpResponse("Username: " + username + "or mail: " + email +  " in use. Please try another one.")
         else:
             user = User.objects.create_user(username, email, password)
-            return HttpResponse("Welcome to Momentgram, " + user.username)
+            #return HttpResponse("Welcome to Momentgram, " + user.username)
+
+            return HttpResponseRedirect(reverse("login"))
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return HttpResponse("You are already registered and logged in using: "+ request.user.username)
+            #return HttpResponse("You are already registered and logged in using: "+ request.user.username)
             # if init page is done, send him there
+
+            return HttpResponseRedirect(reverse("view_post"))
         return render(request, 'Momentgram/register.html')
 
 def signIn(request):
@@ -53,7 +57,7 @@ def signIn(request):
                 next = request.session['next']
                 request.session['next'] = None
                 return redirect(next)
-            return HttpResponse("logged in")
+            return HttpResponseRedirect(reverse("view_post"))
         else:
             return HttpResponse("Failed. Username or password not correct")
 
