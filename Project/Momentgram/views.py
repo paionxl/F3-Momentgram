@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from Momentgram.models import Profile, Post
 from datetime import datetime, timedelta
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 
 
