@@ -13,10 +13,9 @@ urlpatterns = [
     url(r'^$', views.index, name='init'),
     url(r'^login/$', views.signIn, name='login'),
     url(r'^signup/$', views.register, name='signup'),
-    url(r'^signup/done/$', views.register, name='doner'),
-    url(r'^login/done/$', views.signIn, name='donel'),
     url(r'^logout/$', views.log_out, name='logout'),
-    url(r'^post/$', views.publish_post, name='publish')
+    url(r'^post/$', views.publish_post, name='publish'),
+    url(r'^view_post/$', views.view_post, name='view_post')
 
     #path('admin/', admin.site.urls),
     #path('', include('posts.urls'))
