@@ -14,6 +14,8 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("publish"))
     return render(request, 'Momentgram/init.html')
 
 @login_required
@@ -31,19 +33,17 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         if User.objects.filter(username=username).exists() or User.objects.filter(email = email).exists():
-            return HttpResponse("Username: " + username + "or mail: " + email +  " in use. Please try another one.")
+            return HttpResponse("Username: " + username + " or mail: " + email +  " in use. Please try another one.")
         else:
             user = User.objects.create_user(username, email, password)
             #return HttpResponse("Welcome to Momentgram, " + user.username)
-
             return HttpResponseRedirect(reverse("login"))
 
     if request.method == 'GET':
         if request.user.is_authenticated:
             #return HttpResponse("You are already registered and logged in using: "+ request.user.username)
             # if init page is done, send him there
-
-            return HttpResponseRedirect(reverse("view_post"))
+            return HttpResponseRedirect(reverse("publish"))
         return render(request, 'Momentgram/register.html')
 
 def signIn(request):
@@ -57,13 +57,14 @@ def signIn(request):
                 next = request.session['next']
                 request.session['next'] = None
                 return redirect(next)
-            return HttpResponseRedirect(reverse("view_post"))
+            return HttpResponseRedirect(reverse("publish"))
         else:
             return HttpResponse("Failed. Username or password not correct")
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return HttpResponse("You are already logged in using: " + request.user.username)
+            # return HttpResponse("You are already logged in using: " + request.user.username)
+            return HttpResponseRedirect(reverse("publish"))
             # if init page is done, send him there
         if request.GET.get('next',''):
             request.session['next'] = request.GET.get('next', '/')
