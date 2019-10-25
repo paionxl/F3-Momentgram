@@ -26,6 +26,7 @@ def entry(request):
 def view_post(request):
     return render(request, 'Momentgram/post_visualitzation.html')
 
+
 def register(request):
 
     if request.method == 'POST':
