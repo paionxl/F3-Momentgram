@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^$', views.index, name='init'),
     url(r'^login/$', views.signIn, name='login'),
     url(r'^signup/$', views.register, name='signup'),
-    url(r'^logout/$', views.log_out, name='logout'),
+    url(r'^logout/$', views.search_users, name='logout'),
     url(r'^post/$', views.publish_post, name='publish'),
     url(r'^view_post/$', views.view_post, name='view_post')
 
