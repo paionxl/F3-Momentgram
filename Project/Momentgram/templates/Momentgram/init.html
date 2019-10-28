@@ -62,9 +62,8 @@
 
         .container {
             padding: 30px;
-
         }
-
+        
         span.psw {
             float: right;
             padding-top: 16px;
@@ -82,7 +81,9 @@
         }
         .login-container {
             width: 350px;
-            height: 500px;
+
+            height: auto;
+
             border: 1px solid #e6e6e6;
             background-color: white;
             margin-left: auto;
@@ -91,7 +92,15 @@
         .title {
             text-align: center;
             color: #3897f0;
+            font-family: 'URW Chancery L', cursive;
+            font-size: 24px;
+            font-size: 2.4rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #000;
         }
+
+
         #register, #login {
             background-color:#3897f0;
             border-radius: 3px;
@@ -107,13 +116,19 @@
 <div>
     <div class="login-container">
         <h2 class="title">Momentgram</h2>
+
         <h4>Sign up to see photos and videos from your friends.</h4>
+
         <div class="imgcontainer">
             <img style="width:100%" src="https://www.abc.net.au/news/image/9298152-3x2-700x467.jpg" class="image">
         </div>
         <div class="container">
-            <button id="register" type="submit">Sign up</button>
-            <button id="login" type="submit">Log in</button>
+
+
+            <a href="{% url 'signup' %}"><button id="signup" >Sign Up</button></a>
+            <a href="{% url 'login' %}"><button id="login" type="submit">Sign In</button></a>
+
+
         </div>
     </div>
 </div>
