@@ -6,6 +6,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="pagination-with-styles.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
      <style>
@@ -132,6 +135,7 @@
         }
 
 
+
     </style>
 </head>
 <body style="background-color: whitesmoke;">
@@ -164,9 +168,9 @@
             </li>
 
             <li class="search-container" >
-                <form action=" " method="GET" style="border: none">
+                <form action=" {% url 'search_users'%}" method="GET" style="border: none">
                   {% csrf_token %}
-                    <input type="text" placeholder="Search" name="search" style="background: rgba(255,255,255,.5); width: auto; padding: 6px; font-size: 10px; border:none; margin-bottom: 0px;">
+                    <input type="text" placeholder="Search" name="searched" style="background: rgba(255,255,255,.5); width: auto; padding: 6px; font-size: 10px; border:none; margin-bottom: 0px;">
                 
                     <button  type="submit"> <i class="fa fa-search"></i> </button>
                     
