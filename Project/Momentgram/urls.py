@@ -15,8 +15,7 @@ urlpatterns = [
     url(r'^signup/$', views.register, name='signup'),
     url(r'^logout/$', views.log_out, name='logout'),
     url(r'^post/$', views.publish_post, name='publish'),
-    url(r'^view_post/$', views.view_post, name='view_post'),
-    url(r'^search_users/$', views.search_users, name='search_users')
+    url(r'^view_post/$', views.view_post, name='view_post')
 
     #path('admin/', admin.site.urls),
     #path('', include('posts.urls'))
