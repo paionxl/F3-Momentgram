@@ -5,13 +5,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from Momentgram.models import Profile, Post
+from .models import Profile, Post
 from datetime import datetime, timedelta
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
-
-
+from .utils import *
 
 
 def index(request):
@@ -29,7 +28,6 @@ def view_post(request):
 
 
 def register(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -80,21 +78,18 @@ def log_out(request):
 @login_required
 def publish_post(request):
     if request.method == 'POST':
-        date = datetime.now()
+
         image_name = request.FILES['image'].name
         image = request.FILES['image']
         description = request.POST.get('description')
-        post = Post()
-        post.description = description
-        post.image = image
-        post.user = request.user
-        post.date = date
-        post.save()
+
+        post = createPost(description, request.user, image)
+
         context ={
             'username' : post.user.username,
             'description' : post.description,
             'image_name' : image_name,
-            'date' : date
+            'date' : post.date
         }
         return render(request, 'Momentgram/post_visualitzation.html', context)
     if request.method == 'GET':
@@ -104,8 +99,8 @@ def publish_post(request):
 def search_users(request, index=1):
     if request.method == 'GET':
         pattern = request.GET.get('searched')
-        users = [ x.username for x in User.objects.filter(username__contains = pattern) ]
-        p = Paginator( users , 20)
+        users = [x.username for x in User.objects.filter(username__contains = pattern)]
+        p = Paginator(users, 20)
         maxPage = p.num_pages
         page = 1
         if 'page' in request.GET:
@@ -115,6 +110,7 @@ def search_users(request, index=1):
             'maxPage' : [ x+1 for x in range(maxPage)],
         }
         return render(request, 'Momentgram/searchUsers.html', context)
+
 
 
 
