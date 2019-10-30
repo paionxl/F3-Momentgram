@@ -9,6 +9,7 @@ from Momentgram.models import Profile, Post
 from datetime import datetime, timedelta
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.core.paginator import Paginator
 
 
 

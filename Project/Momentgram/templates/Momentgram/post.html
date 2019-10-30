@@ -1,148 +1,30 @@
-<!DOCTYPE html>
+{% extends 'Momentgram/base.html' %}
+{% block content %}
 
-<html>
-
-<head>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        body {font-family: Arial, Helvetica, sans-serif; color: dimgrey;}
-        form {border: 3px solid #f1f1f1;}
-
-        input[type=file], input[type=text]{
-            width: 100%;
-            padding: 4px;
-            margin: 0 0 8px 0;
-            display: inline-block;
-            border-radius: 3px;
-            box-sizing: border-box;
-            color: #262626;
-            border: 1px solid #efefef;
-            background: #fafafa;
-            font-size: 12px;
-
-        }
-        input {
-            border-radius: 3px;
-        }
-        .input-label {
-            font-size: 10px;
-            margin-top: 20px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-        button:disabled{
-            opacity: 0.5;
-            cursor: default;
-        }
-
-        
-        .container {
-            padding: 30px;
-
-        }
-
-
-        a.psw:hover{
-                
-            text-decoration:underline;
-                 
-        }
-
-
-
-        .login-container {
-            width: 350px;
-            height: auto;
-            border: 1px solid #e6e6e6;
-            background-color: white;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .title {
-            text-align: center;
-            color: #3897f0;
-            font-family: 'URW Chancery L', cursive;
-            font-size: 24px;
-            font-size: 2.4rem;
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #000;
-        }
-        
-        #upload{
-            background-color:#3897f0;
-            border-radius: 2px;
-            font-weight: bolder;
-        }
-
-        .one {
-            color: #262626;
-            font-size: 14px;
-            margin: 15px;
-            text-align: center;
-        }
-        .two{
-            
-            display: inline !important;
-            margin: 0 !important;
-            color: #3897f0;
-
-        }
-
-    </style>
-
-</head>
-
-<body style="background-color: whitesmoke">
-
+{% load static %}
 <div>
+    <div class="login-container" style="margin-top: 20px;">
+        <h2 class="title1" style="margin-top: 15px;">Post A New Photo</h2>
+        <div class="container" >
 
-    <div class="login-container">
+ 
+    		<form id="form" action="" method="post" enctype="multipart/form-data">
 
-        <h2 class="title">Momentgram</h2>
+    			{% csrf_token %}
 
+                <div class="container">
 
-        
+                    <label class="input-label">Description</label>
+    				<input class="input" type="text"  id="description" name="description" placeholder="Description" required />
+    			
+    				<input style="font-size: 10px; color: #FFF" type="file" accept="image/*" name="image" />
+    				
+    				<input id="login" type="submit" value="Upload" style="margin-top: 10px;">
 
-
-		<form id="form" action="" method="post" enctype="multipart/form-data">
-
-			{% csrf_token %}
-
-            <div class="container">
-
-                <label class="input-label">Description</label>
-				<input class="input" type="text"  id="description" name="description" placeholder="Description" required />
-			
-				<input id="image" type="file" accept="image/*" name="image" />
-				
-				<input id="upload" type="submit" value="Upload">
-
-            </div>
-		</form>
-
+                </div>
+    		</form>
+        </div>
     </div>
-
 </div>
 
-<script>
-
-</script>
-
-</body>
-
-</html>
+{% endblock %}
