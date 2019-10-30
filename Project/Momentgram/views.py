@@ -111,7 +111,7 @@ def search_users(request):
         if 'page' in request.GET:
             page = request.GET.get('page')
         context = {
-            'users' : users,
+            'users' : p.page(page),
             'maxPage' : maxPage
         }
         return render(request, 'Momentgram/search.html', context)
