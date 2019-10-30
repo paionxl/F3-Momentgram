@@ -107,9 +107,21 @@ def add_friend(request):
         context ={
             'followed' : True
         }
-        #return render(request, 'Momentgram/profile.html', context)
+        #return reverse('profile', context)
         return HttpResponse("Followed correctly")
 
+@login_required
+def add_friend(request):
+        follow = Follow()
+        follow.following = request.user
+        follow.follower = request.user
+        follow.save()
+        context ={
+            'followed' : False
+        }
+
+        #return reverse('profile', context)
+        return HttpResponse("Followed correctly")
 
 
 
