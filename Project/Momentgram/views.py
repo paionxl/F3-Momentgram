@@ -100,6 +100,21 @@ def publish_post(request):
     if request.method == 'GET':
         return render(request, 'Momentgram/post.html')
 
+@login_required
+def search_users(request, index=1):
+    if request.method == 'GET':
+        pattern = request.GET.get('searched')
+        users = [ x.username for x in User.objects.filter(username__contains = pattern) ]
+        p = Paginator( users , 20)
+        maxPage = p.num_pages
+        page = 1
+        if 'page' in request.GET:
+            page = request.GET.get('page')
+        context = {
+            'users' : p.page(page),
+            'maxPage' : [ x+1 for x in range(maxPage)],
+        }
+        return render(request, 'Momentgram/searchUsers.html', context)
 
 
 
