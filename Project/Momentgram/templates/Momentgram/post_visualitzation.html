@@ -1,57 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <style>
-        .title {
-            text-align: center;
-            color: #3897f0;
-            font-family: 'URW Chancery L', cursive;
-            font-size: 14px;
-            font-style: italic;
-            color: #ffffff;
-        }
-    </style>
-</head>
-<body style="background-color: whitesmoke;">
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-        <ul class="navbar-nav"  style="margin-right:auto;">
-            <li class="nav-item active">
-                <!-- A inici -->
-                <a class="nav-link title" href="#">MOMENTGRAM</a>
-            </li>
-            <li class="nav-item">
-                <!-- A Publicar foto -->
-                <a class="nav-link" href="{% url 'publish' %}">Publish post</a>
-            </li>
-            <li class="nav-item">
-                <!-- A See post -->
-                <a class="nav-link" href="#">See post</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <!-- Falta posar nom -->
-                <p class="nav-link" style="margin-bottom:0px">Hi {{ user.get_username }}</p>
-            </li>
-            <li class="nav-item active">
-                <!-- Logout -->
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-            </li>
-        </ul>
-    </nav>
-    <div class="row" style="padding: 10px 150px">
+
+{% extends 'Momentgram/base.html' %}
+{% block content %}
+
+{% load static %}
+<div>
+     <div class="row" style="padding: 10px 150px">
         <div class="col-8" style="background-color: white; padding: 10px;">
 
-            <img id="image" src="/media/images/{{image_name}}/"/>
+            <img id="image" style=" max-width: 66.666667%;" src="/media/images/{{image_name}}/"/>
         </div>
         <div class="col-4" style="background-color: white; padding: 20px">
             <p id="userName" style="font-size: 14px; font-weight: bold">{{ username }}</p>
@@ -60,5 +16,6 @@
             <p id="date" style="font-size: 10px">{{ date }}</p>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+{% endblock %}
