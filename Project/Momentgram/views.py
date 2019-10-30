@@ -6,11 +6,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from Momentgram.models import Profile, Post, Follow
+from .models import Profile, Post
+>>>>>>> c2e16706480aa60adf10bfab64da1231dd4b1781
 from datetime import datetime, timedelta
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-
-
+from django.core.paginator import Paginator
+from .utils import *
 
 
 def index(request):
@@ -28,7 +30,6 @@ def view_post(request):
 
 
 def register(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -78,21 +79,18 @@ def log_out(request):
 @login_required
 def publish_post(request):
     if request.method == 'POST':
-        date = datetime.now()
+
         image_name = request.FILES['image'].name
         image = request.FILES['image']
         description = request.POST.get('description')
-        post = Post()
-        post.description = description
-        post.image = image
-        post.user = request.user
-        post.date = date
-        post.save()
+
+        post = createPost(description, request.user, image)
+
         context ={
             'username' : post.user.username,
             'description' : post.description,
             'image_name' : image_name,
-            'date' : date
+            'date' : post.date
         }
         return render(request, 'Momentgram/post_visualitzation.html', context)
     if request.method == 'GET':
@@ -152,9 +150,22 @@ def manage_friend(request, username):
             'description' : (Profile.objects.filter(user=user)[0]).bio,
             'fullName' : user.first_name + " " + user.last_name,
         }
-
-
     return reverse('profile', context)
+
+def search_users(request, index=1):
+    if request.method == 'GET':
+        pattern = request.GET.get('searched')
+        users = [x.username for x in User.objects.filter(username__contains = pattern)]
+        p = Paginator(users, 20)
+        maxPage = p.num_pages
+        page = 1
+        if 'page' in request.GET:
+            page = request.GET.get('page')
+        context = {
+            'users' : p.page(page),
+            'maxPage' : [ x+1 for x in range(maxPage)],
+        }
+        return render(request, 'Momentgram/searchUsers.html', context)
 
 
 

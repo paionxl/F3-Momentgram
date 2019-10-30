@@ -10,14 +10,6 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     web = models.TextField(max_length=500, blank=True)
 
-    def get_followers(self):
-        followers = Follow.object.filter(follower=self.user)
-        return followers
-
-    def get_following(self):
-        following = Follow.object.filter(following=self.user)
-        return following
-
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -35,7 +27,7 @@ class Follow(models.Model):
     follow_time = models.DateTimeField(default=timezone.now)
 
     def __unicode__(self):
-        return str(self.follow_time)
+        return '{} is followed by {}'.format(self.following, self.follower)
 
 
 class Post(models.Model):
@@ -51,5 +43,14 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('date',)
+
+
+
+
+
+
+
+
+
 
 

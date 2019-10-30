@@ -1,0 +1,69 @@
+{% extends 'Momentgram/base.html' %}
+{% block content %}
+
+{% load static %}
+<div>
+    <div class="login-container" style="margin-top: 20px;">
+        
+        <div class="container" >
+
+ 
+    		{% if users%}
+                 {% for user in users %}
+                    <div >
+                        <div style="width: 70%; height: 30%;">
+                            
+                            <p>{{user}} </p>
+                        </div>
+                    </div>
+                                   
+                
+                {% endfor %}
+            {% else %}
+                    
+                    <h1 style="margin-top: 2%; margin-left: 20%; color: rgba(0, 0, 0, 0.6); font-size: 30px;">No matched users.</h1>
+                    
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+<script>
+    
+    $(function() {
+
+      (function(name) {
+        var container = $('#pagination-' + name);
+        container.pagination({
+          dataSource: "{{users}}"
+          totalNumber: 50,
+          pageSize: 20,
+                showPageNumbers: true,
+                showPrevious: true,
+                showNext: true,
+                showNavigator: true,
+                showFirstOnEllipsisShow: true,
+                showLastOnEllipsisShow: true,
+          ajax: {
+            beforeSend: function() {
+              container.prev().html('Loading data');
+            }
+          },
+          callback: function(response, pagination) {
+            window.console && console.log(22, response, pagination);
+            var dataHtml = '<ul>';
+
+            $.each(response, function (index, user) {
+              dataHtml += '<li>' + user + '</li>';
+            });
+
+            dataHtml += '</ul>';
+
+            container.prev().html(dataHtml);
+          }
+        })
+      })('demo2');
+    })
+         
+</script>
+{% endblock %}
