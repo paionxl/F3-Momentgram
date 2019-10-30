@@ -25,6 +25,11 @@ class ProfileTestCase(TestCase):
     def test_wrong_password(self):
         return self.assertFalse(self.client.login(username="Albert", password=""))
 
+    def test_profile_content(self):
+        user = User.objects.get(id=1)
+        expected_user_name = f'{user.username}'
+        self.assertEqual(expected_user_name,"Albert")
+
 
 class PostTestCase(TestCase):
     def setUp(self):
@@ -52,3 +57,5 @@ class FollowTestCase(TestCase):
         User.objects.create_user("Joan", "joan@gmail.com", "j12345")
         User.objects.create_user("Ling", "ling@gmail.com", "lingling")
         User.objects.create_user("Carlos", "carlos_arenas@gmail.com", "esfw")
+
+    #TODO tests with followers and following
