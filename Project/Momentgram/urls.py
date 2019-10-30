@@ -16,8 +16,7 @@ urlpatterns = [
     url(r'^logout/$', views.log_out, name='logout'),
     url(r'^post/$', views.publish_post, name='publish'),
     url(r'^view_post/$', views.view_post, name='view_post'),
-    url(r'^addfriend/$', views.add_friend, name='add'),
-    url(r'^deletefriend/$', views.delete_friend, name='delete'),
+    url(r'^manage_friend/$', views.manage_friend, name='manage'),
     url(r'^search_users/(?P<index>.*)/$', views.search_users, name='search_users')
 
     #path('admin/', admin.site.urls),
