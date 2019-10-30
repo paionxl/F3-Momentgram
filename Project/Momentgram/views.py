@@ -101,7 +101,7 @@ def publish_post(request):
 @login_required
 def add_friend(request):
         follow = Follow()
-        follow.following = request.user
+        follow.following = request.get('username')
         follow.follower = request.user
         follow.save()
         context ={
@@ -111,17 +111,15 @@ def add_friend(request):
         return HttpResponse("Followed correctly")
 
 @login_required
-def add_friend(request):
-        follow = Follow()
-        follow.following = request.user
-        follow.follower = request.user
-        follow.save()
+def delete_friend(request, following):
+        # obtain Follow
+        # delete Follow
+        Follow.objects.filter(follower.username=request.user, following.username=following)[0].delete()
         context ={
             'followed' : False
         }
-
         #return reverse('profile', context)
-        return HttpResponse("Followed correctly")
+        return HttpResponse("UnFollowed correctly")
 
 
 
