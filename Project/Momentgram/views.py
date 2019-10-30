@@ -99,27 +99,62 @@ def publish_post(request):
         return render(request, 'Momentgram/post.html')
 
 @login_required
-def add_friend(request):
-        follow = Follow()
-        follow.following = request.get('username')
-        follow.follower = request.user
-        follow.save()
-        context ={
-            'followed' : True
-        }
-        #return reverse('profile', context)
-        return HttpResponse("Followed correctly")
+def show_profile(request, username):
+    user = User.objects.filter(username=username)[0]
+    yourProfile = False
+    followed = False
+    if user.username == request.user.username:
+        yourProfile = True
+    else:
+        if(request.user in Profile.objects.filter(user=user)[0]).get_followers()):
+            followed = True
+    context{
+        'followed' : followed,
+        'yourProfile' : yourProfile,
+        'username' : user.username,
+        'n_posts' : #getPosts,
+        'n_followed' : (Profile.objects.filter(user=user)[0]).get_following().count(),
+        'n_followers' : (Profile.objects.filter(user=user)[0]).get_followers().count(),
+        'description' : (Profile.objects.filter(user=user)[0]).bio,
+        'fullName' : user.first_name + " " + user.last_name
+    }
+    return render(request, 'Momentgram/profile.html', context)
+
 
 @login_required
-def delete_friend(request, following):
-        # obtain Follow
-        # delete Follow
+def manage_friend(request, username):
+    user = User.objects.filter(username=username)[0]
+    followed = False
+    if(request.user in Profile.objects.filter(user=user)[0]).get_followers()):
+        followed = True
+
+    if(followed == True):
         Follow.objects.filter(follower.username=request.user, following.username=following)[0].delete()
         context ={
-            'followed' : False
+            'followed' : followed,
+            'yourProfile' : False,
+            'username' : user.username,
+            'n_posts' : #getPosts,
+            'n_followed' : (Profile.objects.filter(user=user)[0]).get_following().count(),
+            'n_followers' : (Profile.objects.filter(user=user)[0]).get_followers().count(),
+            'description' : (Profile.objects.filter(user=user)[0]).bio,
+            'fullName' : user.first_name + " " + user.last_name,
         }
-        #return reverse('profile', context)
-        return HttpResponse("UnFollowed correctly")
+    else:
+        #crearFollow
+        context ={
+            'followed' : followed,
+            'yourProfile' : True,
+            'username' : user.username,
+            'n_posts' : #getPosts,
+            'n_followed' : (Profile.objects.filter(user=user)[0]).get_following().count(),
+            'n_followers' : (Profile.objects.filter(user=user)[0]).get_followers().count(),
+            'description' : (Profile.objects.filter(user=user)[0]).bio,
+            'fullName' : user.first_name + " " + user.last_name,
+        }
+
+
+    return reverse('profile', context)
 
 
 
