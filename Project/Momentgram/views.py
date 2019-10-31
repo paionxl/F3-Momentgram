@@ -144,21 +144,22 @@ def manage_friend(request, username):
         }
     return reverse('profile', context)
 
-def search_users(request, index=1):
+def search_users(request, searched ="", index = 1):
     if request.method == 'GET':
         pattern = request.GET.get('searched')
-        users = [x.username for x in User.objects.filter(username__contains = pattern)]
-        p = Paginator(users, 20)
-        maxPage = p.num_pages
-        page = 1
-        if 'page' in request.GET:
-            page = request.GET.get('page')
-        context = {
-            'users' : p.page(page),
-            'maxPage' : [ x+1 for x in range(maxPage)],
-        }
-        return render(request, 'Momentgram/searchUsers.html', context)
+        if not pattern:
+            pattern = searched
 
+    users = [x.username for x in User.objects.filter(username__contains = pattern)]
+    p = Paginator(users, 2)
+    maxPage = p.num_pages
+    page = index
+    context = {
+        'users' : p.page(page),
+        'maxPage' : [ x+1 for x in range(maxPage)],
+        'searched' : pattern
+    }
+    return render(request, 'Momentgram/searchUsers.html', context)
 
 
 
