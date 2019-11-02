@@ -91,6 +91,8 @@ def publish_post(request):
 @login_required
 def show_profile(request, username, index = 1):
     user = getUser(username)
+    if not user:
+        return HttpResponse("That user doesn't exist: " + username)
     yourProfile = False
     followed = False
     if user.username == request.user.username:
@@ -106,13 +108,13 @@ def show_profile(request, username, index = 1):
         'followed' : followed,
         'yourProfile' : yourProfile,
         'username' : user.username,
-        'n_posts' : getUserPosts(user).count(),
-        'n_followed' : getFollowing(user).count(),
-        'n_followers' : getFollowers(user).count(),
+        'n_posts' : len(getUserPosts(user)),
+        'n_followed' : len(getFollowing(user)),
+        'n_followers' : len(getFollowers(user)),
         'description' : (Profile.objects.filter(user=user)[0]).bio,
-        'fullName' : user.first_name + " " + user.last_name
+        'fullName' : user.first_name + " " + user.last_name,
         'posts' : p.page(page),
-        'maxPage' : [ x+1 for x in range(maxPage)],
+        'maxPage' : [ x+1 for x in range(maxPage)]
     }
     return render(request, 'Momentgram/profile.html', context)
 
@@ -140,7 +142,7 @@ def manage_friend(request, username):
         'description' : (Profile.objects.filter(user=user)[0]).bio,
         'fullName' : user.first_name + " " + user.last_name
     }
-    return reverse('profile', context)
+    return render(request, 'Momentgram/profile.html', context)
 
 def search_users(request, searched ="", index = 1):
     if request.method == 'GET':
@@ -149,7 +151,7 @@ def search_users(request, searched ="", index = 1):
             pattern = searched
 
     users = [x.username for x in User.objects.filter(username__contains = pattern)]
-    p = Paginator(users, 2)
+    p = Paginator(users, 20)
     maxPage = p.num_pages
     page = index
     context = {
