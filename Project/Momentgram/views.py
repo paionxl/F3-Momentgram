@@ -23,8 +23,17 @@ def entry(request):
     return render(request, 'Momentgram/entry.html')
 
 @login_required
-def view_post(request):
-    return render(request, 'Momentgram/post_visualitzation.html')
+def view_post(request, id=None):
+    if id and getPost(id):
+        post = getPost(id)
+        context ={
+            'username' : post.user.username,
+            'description' : post.description,
+            'image_name' : post.image,
+            'date' : post.date
+        }
+        return render(request, 'Momentgram/post_visualization.html', context)
+    return HttpResponse("No such post")
 
 
 def register(request):
@@ -81,7 +90,7 @@ def publish_post(request):
         context ={
             'username' : post.user.username,
             'description' : post.description,
-            'image_name' : image_name,
+            'image_name' : post.image,
             'date' : post.date
         }
         return render(request, 'Momentgram/post_visualitzation.html', context)
@@ -89,8 +98,10 @@ def publish_post(request):
         return render(request, 'Momentgram/post.html')
 
 @login_required
-def show_profile(request, username):
+def show_profile(request, username, index = 1):
     user = getUser(username)
+    if not user:
+        return HttpResponse("That user doesn't exist: " + username)
     yourProfile = False
     followed = False
     if user.username == request.user.username:
@@ -98,15 +109,21 @@ def show_profile(request, username):
     else:
         if(request.user in getFollowers(user)):
             followed = True
+    posts = getUserPosts(user)
+    p = Paginator(posts, 20)
+    maxPage = p.num_pages
+    page = index
     context = {
         'followed' : followed,
         'yourProfile' : yourProfile,
         'username' : user.username,
-        'n_posts' : getUserPosts(user).count(),
-        'n_followed' : getFollowing(user).count(),
-        'n_followers' : getFollowers(user).count(),
+        'n_posts' : len(getUserPosts(user)),
+        'n_followed' : len(getFollowing(user)),
+        'n_followers' : len(getFollowers(user)),
         'description' : (Profile.objects.filter(user=user)[0]).bio,
-        'fullName' : user.first_name + " " + user.last_name
+        'fullName' : user.first_name + " " + user.last_name,
+        'posts' : p.page(page),
+        'maxPage' : [ x+1 for x in range(maxPage)]
     }
     return render(request, 'Momentgram/profile.html', context)
 
@@ -114,15 +131,27 @@ def show_profile(request, username):
 @login_required
 def manage_friend(request, username):
     user = getUser(username)
-    followed = False
-    if(request.user in get_followers(user)):
-        followed = True
+    if user:
+        if(user.username == request.user.username):
+            context = {
+                'yourProfile': True,
+                'followed' : False
+            }
+        else:
+            context = { 'yourProfile': False }
 
-    if(followed == True):
-        unfollow(request.user,user)
-        context = {
-            'followed' : followed,
-            'yourProfile' : False,
+            followed = False
+            if(request.user in get_followers(user)):
+                followed = True
+
+            if(followed == True):
+                unfollow(request.user,user)
+                context = context + { 'followed' : False }
+            else:
+                follow(request.user, user)
+                context = context + { 'followed' : True }
+
+        context = context + {
             'username' : user.username,
             'n_posts' : getUserPosts(user).count(),
             'n_followed' : getFollowing(user).count(),
@@ -130,34 +159,27 @@ def manage_friend(request, username):
             'description' : (Profile.objects.filter(user=user)[0]).bio,
             'fullName' : user.first_name + " " + user.last_name
         }
+        return render(request, 'Momentgram/profile.html', context)
     else:
-        follow(request.user, user)
-        context = {
-            'followed' : followed,
-            'yourProfile' : True,
-            'username' : user.username,
-            'n_posts' : getUserPosts(user).count(),
-            'n_followed' : getFollowing(user).count(),
-            'n_followers' : getFollowers(user).count(),
-            'description' : (Profile.objects.filter(user=user)[0]).bio,
-            'fullName' : user.first_name + " " + user.last_name
-        }
-    return reverse('profile', context)
+        return HttpResponse("No such user")
 
-def search_users(request, index=1):
+
+def search_users(request, searched ="", index = 1):
     if request.method == 'GET':
         pattern = request.GET.get('searched')
-        users = [x.username for x in User.objects.filter(username__contains = pattern)]
-        p = Paginator(users, 20)
-        maxPage = p.num_pages
-        page = 1
-        if 'page' in request.GET:
-            page = request.GET.get('page')
-        context = {
-            'users' : p.page(page),
-            'maxPage' : [ x+1 for x in range(maxPage)],
-        }
-        return render(request, 'Momentgram/searchUsers.html', context)
+        if not pattern:
+            pattern = searched
+
+    users = [x.username for x in User.objects.filter(username__contains = pattern)]
+    p = Paginator(users, 20)
+    maxPage = p.num_pages
+    page = index
+    context = {
+        'users' : p.page(page),
+        'maxPage' : [ x+1 for x in range(maxPage)],
+        'searched' : pattern
+    }
+    return render(request, 'Momentgram/searchUsers.html', context)
 
 
 

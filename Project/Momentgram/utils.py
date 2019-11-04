@@ -22,16 +22,16 @@ def follow(user, user2follow):
 
 
 def unfollow(user, user2unfollow):
-    Follow.object.filter(follower=user, following=user2unfollow)[0].delete()
+    Follow.objects.filter(follower=user, following=user2unfollow)[0].delete()
 
 
 def getFollowers(user):
-    followers = Follow.object.filter(following=user)
+    followers = Follow.objects.filter(following=user)
     return [x.follower for x in followers]
 
 
 def getFollowing(user):
-    following = Follow.object.filter(follower=user)
+    following = Follow.objects.filter(follower=user)
     return [x.following for x in following]
 
 def createUser(username, password, mail, first= None, last=None):
@@ -51,4 +51,13 @@ def isUserExisting(username, mail):
     return User.objects.filter(username=username).exists() or User.objects.filter(email=mail).exists()
 
 def getUser(username):
-    return User.objects.filter(username=username)[0]
+    if User.objects.filter(username=username):
+        return User.objects.filter(username=username)[0]
+    else:
+        return None
+
+def getPost(id):
+    if Post.objects.filter(id=id):
+        return Post.objects.filter(id=id)[0]
+    else:
+        return None
