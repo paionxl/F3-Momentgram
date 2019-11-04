@@ -42,7 +42,10 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         name = request.POST.get('name').split()
-        user = createUser(username, password, email, name[0], name[1]+name[2])
+        l = len(name)
+        for i in range(len(name)-1):
+            name2 += " "+name[i+1]
+        user = createUser(username, password, email, name[0], name2)
         if not user:
             return HttpResponse("Username: " + username + " or mail: " + email +  " in use. Please try another one.")
         else:
@@ -93,7 +96,7 @@ def publish_post(request):
             'image_name' : post.image,
             'date' : post.date
         }
-        return render(request, 'Momentgram/post_visualitzation.html', context)
+        return render(request, 'Momentgram/post_visualization.html', context)
     if request.method == 'GET':
         return render(request, 'Momentgram/post.html')
 
@@ -135,30 +138,43 @@ def manage_friend(request, username):
         if(user.username == request.user.username):
             context = {
                 'yourProfile': True,
-                'followed' : False
+                'followed' : False,
+                'username' : user.username,
+                'n_posts' : len(getUserPosts(user)),
+                'n_followed' : len(getFollowing(user)),
+                'n_followers' : len(getFollowers(user)),
+                'description' : (Profile.objects.filter(user=user)[0]).bio,
+                'fullName' : user.first_name + " " + user.last_name
             }
         else:
-            context = { 'yourProfile': False }
-
             followed = False
-            if(request.user in get_followers(user)):
+            if(request.user in getFollowers(user)):
                 followed = True
 
             if(followed == True):
                 unfollow(request.user,user)
-                context = context + { 'followed' : False }
+                context = {
+                    'yourProfile': False,
+                    'followed' : not followed,
+                    'username' : user.username,
+                    'n_posts' : len(getUserPosts(user)),
+                    'n_followed' : len(getFollowing(user)),
+                    'n_followers' : len(getFollowers(user)),
+                    'description' : (Profile.objects.filter(user=user)[0]).bio,
+                    'fullName' : user.first_name + " " + user.last_name
+                }
             else:
                 follow(request.user, user)
-                context = context + { 'followed' : True }
-
-        context = context + {
-            'username' : user.username,
-            'n_posts' : getUserPosts(user).count(),
-            'n_followed' : getFollowing(user).count(),
-            'n_followers' : getFollowers(user).count(),
-            'description' : (Profile.objects.filter(user=user)[0]).bio,
-            'fullName' : user.first_name + " " + user.last_name
-        }
+                context = {
+                    'yourProfile': False,
+                    'followed' : not followed,
+                    'username' : user.username,
+                    'n_posts' : len(getUserPosts(user)),
+                    'n_followed' : len(getFollowing(user)),
+                    'n_followers' : len(getFollowers(user)),
+                    'description' : (Profile.objects.filter(user=user)[0]).bio,
+                    'fullName' : user.first_name + " " + user.last_name
+                }
         return render(request, 'Momentgram/profile.html', context)
     else:
         return HttpResponse("No such user")
