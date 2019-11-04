@@ -72,7 +72,7 @@
         <p id="userName" style="font-size: 14px; font-weight: bold">{{ username }}</p>
         <p id="coment" style="font-size: 12px">{{ description }}</p>
         <p id="fullName" style="font-size: 12px">{{ fullName }}</p>
-        <button id="follow-btn" type="button" class="btn btn-primary">Follow</button>
+        <button id="follow-btn" type="button" class="btn btn-primary">Follow</button> #FALTA: añadir href="{% url 'manage' username %}"
     </div>
     <div class="col-2 number" style="background-color: white; padding: 20px">
         <p style="font-size: 14px;">Posts</p>
@@ -93,7 +93,7 @@
             {% for post in posts %}
             <div>
                 <div class="container1">
-                    <img style=" max-width: 66.666667%;" src="/media/{{post.image}}/"/>
+                    <img  style=" max-width: 66.666667%;" src="/media/{{post.image}}/"/> #FALTA: añadir href="{% url 'view_post' post.id %}"
                 </div>
             </div>
             {% endfor %}
@@ -115,6 +115,7 @@
     </div>
 </div>
 </body>
+# FALTA: usar yourPofile y followed (cierto si es tu perfil o ya esta seguido, respectivamente) para el botón
 <script>
     if (false) { // case user same as profile page owner
         $("#follow-btn").attr("style","display:none");

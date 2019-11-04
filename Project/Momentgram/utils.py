@@ -55,3 +55,9 @@ def getUser(username):
         return User.objects.filter(username=username)[0]
     else:
         return None
+
+def getPost(id):
+    if Post.objects.filter(id=id):
+        return Post.objects.filter(id=id)[0]
+    else:
+        return None
