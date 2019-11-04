@@ -43,6 +43,7 @@ def register(request):
         password = request.POST.get('password')
         name = request.POST.get('name').split()
         l = len(name)
+        name2=""
         for i in range(len(name)-1):
             name2 += " "+name[i+1]
         user = createUser(username, password, email, name[0], name2)
@@ -113,7 +114,7 @@ def show_profile(request, username, index = 1):
         if(request.user in getFollowers(user)):
             followed = True
     posts = getUserPosts(user)
-    p = Paginator(posts, 20)
+    p = Paginator(posts, 9)
     maxPage = p.num_pages
     page = index
     context = {
@@ -187,7 +188,7 @@ def search_users(request, searched ="", index = 1):
             pattern = searched
 
     users = [x.username for x in User.objects.filter(username__contains = pattern)]
-    p = Paginator(users, 20)
+    p = Paginator(users, 9)
     maxPage = p.num_pages
     page = index
     context = {
