@@ -59,11 +59,11 @@
         {% if yourProfile%}
         {% else %}
             {% if followed%}
-                <a href="{% url 'manage' username %}">
+                <a href="{% url 'manage_complete' username index %}">
                     <button id="unfollow-btn" type="button" class="btn btn-secondary">Unfollow</button>
                 </a>
             {% else %}
-                <a href="{% url 'manage' username %}">
+                <a href="{% url 'manage_complete' username index %}">
                     <button id="follow-btn" type="button" class="btn btn-primary" >Follow</button>
                 </a>
             {% endif %}

@@ -127,15 +127,20 @@ def show_profile(request, username, index = 1):
         'description' : (Profile.objects.filter(user=user)[0]).bio,
         'fullName' : user.first_name + " " + user.last_name,
         'posts' : p.page(page),
-        'maxPage' : [ x+1 for x in range(maxPage)]
+        'maxPage' : [ x+1 for x in range(maxPage)],
+        'index' : index
     }
     return render(request, 'Momentgram/profile.html', context)
 
 
 @login_required
-def manage_friend(request, username):
+def manage_friend(request, username, index = 1):
     user = getUser(username)
     if user:
+        posts = getUserPosts(user)
+        p = Paginator(posts, 9)
+        maxPage = p.num_pages
+        page = index
         if(user.username == request.user.username):
             context = {
                 'yourProfile': True,
@@ -145,7 +150,10 @@ def manage_friend(request, username):
                 'n_followed' : len(getFollowing(user)),
                 'n_followers' : len(getFollowers(user)),
                 'description' : (Profile.objects.filter(user=user)[0]).bio,
-                'fullName' : user.first_name + " " + user.last_name
+                'fullName' : user.first_name + " " + user.last_name,
+                'posts' : p.page(page),
+                'maxPage' : [ x+1 for x in range(maxPage)],
+                'index' : index
             }
         else:
             followed = False
@@ -162,7 +170,10 @@ def manage_friend(request, username):
                     'n_followed' : len(getFollowing(user)),
                     'n_followers' : len(getFollowers(user)),
                     'description' : (Profile.objects.filter(user=user)[0]).bio,
-                    'fullName' : user.first_name + " " + user.last_name
+                    'fullName' : user.first_name + " " + user.last_name,
+                    'posts' : p.page(page),
+                    'maxPage' : [ x+1 for x in range(maxPage)],
+                    'index' : index
                 }
             else:
                 follow(request.user, user)
@@ -174,7 +185,10 @@ def manage_friend(request, username):
                     'n_followed' : len(getFollowing(user)),
                     'n_followers' : len(getFollowers(user)),
                     'description' : (Profile.objects.filter(user=user)[0]).bio,
-                    'fullName' : user.first_name + " " + user.last_name
+                    'fullName' : user.first_name + " " + user.last_name,
+                    'posts' : p.page(page),
+                    'maxPage' : [ x+1 for x in range(maxPage)],
+                    'index' : index
                 }
         return render(request, 'Momentgram/profile.html', context)
     else:

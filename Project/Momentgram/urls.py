@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^logout/$', views.log_out, name='logout'),
     url(r'^post/$', views.publish_post, name='publish'),
     url(r'^view_post/(?P<id>.*)/$', views.view_post, name='view_post'),
+    url(r'^manage_friend/(?P<username>.*)/(?P<index>.*)/$', views.manage_friend, name='manage_complete'),
     url(r'^manage_friend/(?P<username>.*)/$', views.manage_friend, name='manage'),
     url(r'^search_users/$', views.search_users, name='search_users'),
     url(r'^search_users/searched=(?P<searched>.*)/(?P<index>.*)/$', views.search_users, name='search_users_complete'),
