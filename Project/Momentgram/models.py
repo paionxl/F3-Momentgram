@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
@@ -15,6 +16,7 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
@@ -31,10 +33,9 @@ class Follow(models.Model):
 
 
 class Post(models.Model):
-
-    description = models.TextField(max_length=500,blank=True)
+    description = models.TextField(max_length=500, blank=True)
     image = models.ImageField(upload_to='images/')
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
 
@@ -43,14 +44,3 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('date',)
-
-
-
-
-
-
-
-
-
-
-
