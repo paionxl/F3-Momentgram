@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
+
 
 class Profile(models.Model):
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
@@ -16,17 +17,26 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
+
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-class Post(models.Model):
+class Follow(models.Model):
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="who_follows")
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="who_is_followed")
+    follow_time = models.DateTimeField(default=timezone.now)
 
-    description = models.TextField(max_length=500,blank=True)
+    def __unicode__(self):
+        return '{} is followed by {}'.format(self.following, self.follower)
+
+
+class Post(models.Model):
+    description = models.TextField(max_length=500, blank=True)
     image = models.ImageField(upload_to='images/')
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
 
     def __str__(self):
@@ -34,5 +44,3 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('date',)
-
-

@@ -5,12 +5,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from Momentgram.models import Profile, Post
-from datetime import datetime, timedelta
+from Momentgram.models import Profile, Post, Follow
+from datetime import datetime
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-
-
+from django.core.paginator import Paginator
+from .utils import *
 
 
 def index(request):
@@ -23,27 +23,37 @@ def entry(request):
     return render(request, 'Momentgram/entry.html')
 
 @login_required
-def view_post(request):
-    return render(request, 'Momentgram/post_visualitzation.html')
+def view_post(request, id=None):
+    if id and getPost(id):
+        post = getPost(id)
+        context ={
+            'username' : post.user.username,
+            'description' : post.description,
+            'image_name' : post.image,
+            'date' : post.date
+        }
+        return render(request, 'Momentgram/post_visualization.html', context)
+    return HttpResponse("No such post")
 
 
 def register(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        if User.objects.filter(username=username).exists() or User.objects.filter(email = email).exists():
+        name = request.POST.get('name').split()
+        l = len(name)
+        name2=""
+        for i in range(len(name)-1):
+            name2 += " "+name[i+1]
+        user = createUser(username, password, email, name[0], name2)
+        if not user:
             return HttpResponse("Username: " + username + " or mail: " + email +  " in use. Please try another one.")
         else:
-            user = User.objects.create_user(username, email, password)
-            #return HttpResponse("Welcome to Momentgram, " + user.username)
             return HttpResponseRedirect(reverse("login"))
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            #return HttpResponse("You are already registered and logged in using: "+ request.user.username)
-            # if init page is done, send him there
             return HttpResponseRedirect(reverse("publish"))
         return render(request, 'Momentgram/register.html')
 
@@ -64,9 +74,7 @@ def signIn(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            # return HttpResponse("You are already logged in using: " + request.user.username)
             return HttpResponseRedirect(reverse("publish"))
-            # if init page is done, send him there
         if request.GET.get('next',''):
             request.session['next'] = request.GET.get('next', '/')
         return render(request, 'Momentgram/login.html')
@@ -79,25 +87,130 @@ def log_out(request):
 @login_required
 def publish_post(request):
     if request.method == 'POST':
-        date = datetime.now()
         image_name = request.FILES['image'].name
         image = request.FILES['image']
         description = request.POST.get('description')
-        post = Post()
-        post.description = description
-        post.image = image
-        post.user = request.user
-        post.date = date
-        post.save()
+        post = createPost(description, request.user, image)
         context ={
             'username' : post.user.username,
             'description' : post.description,
-            'image_name' : image_name,
-            'date' : date
+            'image_name' : post.image,
+            'date' : post.date
         }
-        return render(request, 'Momentgram/post_visualitzation.html', context)
+        return render(request, 'Momentgram/post_visualization.html', context)
     if request.method == 'GET':
         return render(request, 'Momentgram/post.html')
+
+@login_required
+def show_profile(request, username, index = 1):
+    user = getUser(username)
+    if not user:
+        return HttpResponse("That user doesn't exist: " + username)
+    yourProfile = False
+    followed = False
+    if user.username == request.user.username:
+        yourProfile = True
+    else:
+        if(request.user in getFollowers(user)):
+            followed = True
+    posts = getUserPosts(user)
+    p = Paginator(posts, 9)
+    maxPage = p.num_pages
+    page = index
+    context = {
+        'followed' : followed,
+        'yourProfile' : yourProfile,
+        'username' : user.username,
+        'n_posts' : len(getUserPosts(user)),
+        'n_followed' : len(getFollowing(user)),
+        'n_followers' : len(getFollowers(user)),
+        'description' : (Profile.objects.filter(user=user)[0]).bio,
+        'fullName' : user.first_name + " " + user.last_name,
+        'posts' : p.page(page),
+        'maxPage' : [ x+1 for x in range(maxPage)],
+        'index' : index
+    }
+    return render(request, 'Momentgram/profile.html', context)
+
+
+@login_required
+def manage_friend(request, username, index = 1):
+    user = getUser(username)
+    if user:
+        posts = getUserPosts(user)
+        p = Paginator(posts, 9)
+        maxPage = p.num_pages
+        page = index
+        if(user.username == request.user.username):
+            context = {
+                'yourProfile': True,
+                'followed' : False,
+                'username' : user.username,
+                'n_posts' : len(getUserPosts(user)),
+                'n_followed' : len(getFollowing(user)),
+                'n_followers' : len(getFollowers(user)),
+                'description' : (Profile.objects.filter(user=user)[0]).bio,
+                'fullName' : user.first_name + " " + user.last_name,
+                'posts' : p.page(page),
+                'maxPage' : [ x+1 for x in range(maxPage)],
+                'index' : index
+            }
+        else:
+            followed = False
+            if(request.user in getFollowers(user)):
+                followed = True
+
+            if(followed == True):
+                unfollow(request.user,user)
+                context = {
+                    'yourProfile': False,
+                    'followed' : not followed,
+                    'username' : user.username,
+                    'n_posts' : len(getUserPosts(user)),
+                    'n_followed' : len(getFollowing(user)),
+                    'n_followers' : len(getFollowers(user)),
+                    'description' : (Profile.objects.filter(user=user)[0]).bio,
+                    'fullName' : user.first_name + " " + user.last_name,
+                    'posts' : p.page(page),
+                    'maxPage' : [ x+1 for x in range(maxPage)],
+                    'index' : index
+                }
+            else:
+                follow(request.user, user)
+                context = {
+                    'yourProfile': False,
+                    'followed' : not followed,
+                    'username' : user.username,
+                    'n_posts' : len(getUserPosts(user)),
+                    'n_followed' : len(getFollowing(user)),
+                    'n_followers' : len(getFollowers(user)),
+                    'description' : (Profile.objects.filter(user=user)[0]).bio,
+                    'fullName' : user.first_name + " " + user.last_name,
+                    'posts' : p.page(page),
+                    'maxPage' : [ x+1 for x in range(maxPage)],
+                    'index' : index
+                }
+        return render(request, 'Momentgram/profile.html', context)
+    else:
+        return HttpResponse("No such user")
+
+
+def search_users(request, searched ="", index = 1):
+    if request.method == 'GET':
+        pattern = request.GET.get('searched')
+        if not pattern:
+            pattern = searched
+
+    users = [x.username for x in User.objects.filter(username__contains = pattern)]
+    p = Paginator(users, 9)
+    maxPage = p.num_pages
+    page = index
+    context = {
+        'users' : p.page(page),
+        'maxPage' : [ x+1 for x in range(maxPage)],
+        'searched' : pattern
+    }
+    return render(request, 'Momentgram/searchUsers.html', context)
 
 
 
