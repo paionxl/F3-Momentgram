@@ -44,3 +44,16 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('date',)
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
+    text = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        ordering = ('date',)
