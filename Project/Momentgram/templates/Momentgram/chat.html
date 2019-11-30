@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        .chat{
+            max-width: 600px;
+            max-height: 500px;
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            margin-top: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        .head {
+            width: 100%;
+            background-color: #c4c4c4;
+            height: 5%;
+            border: 1px solid grey;
+            text-align: center;
+            font-size: 20px;
+            padding: 10px 0;
+            font-family: Lucida Console;
+            border-radius: 5px 5px 0 0;
+        }
+        .messages {
+            width: 100%;
+            min-height: 400px;
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: white;
+            height: 80%;
+            border: 1px solid grey;
+            text-align: center;
+            font-size: 20px;
+            font-family: Lucida Console;
+        }
+        .send {
+            width: 100%;
+            min-height: 50px;
+            background-color: white;
+            height: 15%;
+            border: 1px solid grey;
+            text-align: center;
+            font-family: Lucida Console;
+            border-radius: 0 0 5px 5px;
+        }
+        .send-button{
+            color: #3897f0;
+            height: 35px;
+        }
+        .message-input{
+            width: 80%;
+            border: 1px solid grey;
+            border-radius: 5px;
+            height: 90%;
+            padding: 9px;
+            margin: 5px;
+            border-radius: 3px;
+        }
+        .messageContainer {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            text-align: left;
+            box-sizing: border-box;
+            overflow: hidden;
+            margin: 5px 0 5px;
+
+        }
+        .ownMessage {
+            box-shadow: 2px 2px grey;
+            padding: 5px;
+            overflow-x: auto;
+            background-color: dimgrey;
+            float: right;
+            width: 46%;
+            color: lawngreen;
+            border-radius: 3px;
+        }
+        .receivedMessage {
+            box-shadow: 2px 2px grey;
+            padding: 5px;
+            float: left;
+            width: 60%;
+            background-color: lightgrey;
+            position: relative;
+            color: #3897f0;
+            max-width: 400px;
+            border-radius: 3px;
+        }
+
+    </style>
+</head>
+{% extends 'Momentgram/base.html' %}
+{% block content %}
+
+{% load static %}
+<div style="background-color: white;">
+    <div class="chat">
+        <div class="head">
+           Chat with Potato
+        </div>
+        <div class="messages">
+            <div class="messageContainer">
+                <div class="ownMessage">
+                    What day of the week do potatoes hate the most?
+                </div>
+            </div>
+            <div class="messageContainer">
+
+                <div class="receivedMessage">
+                    <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
+                    Fry-day
+                </div>
+            </div>
+            <div class="messageContainer">
+                <div class="ownMessage">
+                    Who was the potato’s favorite author?
+                </div>
+            </div>
+            <div class="messageContainer">
+
+                <div class="receivedMessage">
+                    <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
+                    Edgar Allen Poe-tato.
+                </div>
+            </div>
+            <div class="messageContainer">
+
+                <div class="receivedMessage">
+                    <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
+                    What’s the difference between humans and bullets?
+                </div>
+            </div>
+            <div class="messageContainer">
+                <div class="ownMessage">
+                    Humans miss John Lennon.
+                </div>
+            </div>
+            <div class="messageContainer">
+                <div class="ownMessage">
+                    Humans miss John Lennon.
+                </div>
+            </div>
+            <div class="messageContainer">
+                <div class="ownMessage">
+                    Humans miss John Lennon.
+                </div>
+            </div>
+            <div class="messageContainer">
+                <div class="ownMessage">
+                    Humans miss John Lennon.
+                </div>
+            </div>
+        </div>
+        <div class="send">
+            <input type="text" name="fname" id="message-content" class="message-input">
+            <button type="button" class="btn btn-primary send-button">Send</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
