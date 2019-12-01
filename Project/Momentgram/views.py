@@ -118,17 +118,17 @@ def show_profile(request, username, index = 1):
     maxPage = p.num_pages
     page = index
     context = {
-        'followed' : followed,
-        'yourProfile' : yourProfile,
-        'username' : user.username,
-        'n_posts' : len(getUserPosts(user)),
-        'n_followed' : len(getFollowing(user)),
-        'n_followers' : len(getFollowers(user)),
-        'description' : (Profile.objects.filter(user=user)[0]).bio,
-        'fullName' : user.first_name + " " + user.last_name,
-        'posts' : p.page(page),
-        'maxPage' : [ x+1 for x in range(maxPage)],
-        'index' : index
+         'followed' : followed,
+         'yourProfile' : yourProfile,
+         'username' : user.username,
+         'n_posts' : len(getUserPosts(user)),
+         'n_followed' : len(getFollowing(user)),
+         'n_followers' : len(getFollowers(user)),
+         'description' : (Profile.objects.filter(user=user)[0]).bio,
+         'fullName' : user.first_name + " " + user.last_name,
+         'posts' : p.page(page),
+         'maxPage' : [ x+1 for x in range(maxPage)],
+         'index' : index
     }
     return render(request, 'Momentgram/profile.html', context)
 
@@ -211,6 +211,19 @@ def search_users(request, searched ="", index = 1):
         'searched' : pattern
     }
     return render(request, 'Momentgram/searchUsers.html', context)
+
+def timeline(request, index = 1):
+    if request.method == "GET":
+        posts = getUserPosts(request.user) #change
+        p = Paginator(posts, 9)
+        maxPage = p.num_pages
+        context = {
+            'posts' : p.page(index),
+            'maxPage' : [ x+1 for x in range(maxPage)],
+            'index' : index
+        }
+        return render(request, 'Momentgram/timeline.html', context)
+
 
 
 

@@ -21,7 +21,11 @@ urlpatterns = [
     url(r'^search_users/$', views.search_users, name='search_users'),
     url(r'^search_users/searched=(?P<searched>.*)/(?P<index>.*)/$', views.search_users, name='search_users_complete'),
     url(r'^profile=(?P<username>.*)/(?P<index>.*)/$', views.show_profile, name='show_profile_complete'),
-    url(r'^profile=(?P<username>.*)/$', views.show_profile, name='show_profile')
+    url(r'^profile=(?P<username>.*)/$', views.show_profile, name='show_profile'),
+    url(r'^timeline/index=(?P<index>.*)/$', views.timeline, name='full_timeline'),
+    url(r'^timeline/$', views.timeline, name='timeline')
+
+
 
 
     #path('admin/', admin.site.urls),

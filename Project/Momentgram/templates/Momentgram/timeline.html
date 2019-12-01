@@ -56,22 +56,13 @@
             <div class="posts_placer row" style="padding: 10px 150px">
                 <div class="col-1" style=""></div>
                 <div class="container1 col-10" style="">
-                    <!--
-                    <p>
-                        <img href="" style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg"/>
-                        <a href="">{{post.username}}</a>
-                    </p>
-                    <img  style="width: 100%; border-radius: 8px;" src="/media/{{post.image}}/"/>
-                    <p>{{post.description}}</p>
-                    <p>{{post.date}}</p>
-                    -->
                     <p>
                         <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg"/>
-                        <a href="">Jordi Barea</a>
+                        <a href="{% url 'show_profile' post.user.username %}">{{ post.user.username }}</a>
                     </p>
-                    <img style="width: 100%; border-radius: 8px;" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"/>
-                    <p>Toh flamas</p>
-                    <p style="font-size: 10px">6/6/2066</p>
+                    <img style="width: 100%; border-radius: 8px;" src="/media/{{post.image}}"/>
+                    <p>{{post.description}}</p>
+                    <p style="font-size: 10px">{{post.date}}</p>
                 </div>
                 <div class="col-1" style=""></div>
             </div>
@@ -87,8 +78,7 @@
 </div><div class="center">
     <div class="pagination">
         {% for index in maxPage %}
-
-        <a href="{% url 'show_profile_complete' username index %}">{{index}}</a>
+        <a href="{% url 'full_timeline' index %}">{{index}}</a>
         {% endfor %}
     </div>
 </div>
