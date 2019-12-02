@@ -87,7 +87,7 @@ def getUsersSortedToChat(user, pattern):
     for u in users:
         if u in followers:
             toReturn.append(u)
-            users.delte(u)
+            users.delete(u)
 
     for u in users:
         toReturn.append(u)
