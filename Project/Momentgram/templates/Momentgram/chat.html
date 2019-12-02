@@ -129,7 +129,7 @@
             <form action="{% url 'chat' username %}" method="POST" style="border: none" class="send">
                 {% csrf_token %}
                 <input type="text" placeholder="TypeMessage" name="message" class="message-input">
-                <button type="submit" class="btn btn-primary send-button" disabled="disabled">Send</button>
+                <button type="submit" class="btn btn-primary send-button">Send</button>
             </form>
         </div>
     </div>

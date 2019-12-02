@@ -213,8 +213,9 @@ def search_users(request, isProfile, searched ="", index = 1):
 
 def timeline(request, index = 1):
     if request.method == "GET":
-        posts = getUserPosts(request.user) #change
+        posts = getTimeline(request.user)
         p = Paginator(posts, 9)
+        print(p.num_pages)
         maxPage = p.num_pages
         context = {
             'posts' : p.page(index),
@@ -234,8 +235,11 @@ def chat( request, username=""):
             }
             return render(request,'Momentgram/chat.html', context)
         if ( request.method == 'POST' ):
+            if 'message' in request.POST :
+                        message = request.POST.get('message')
             user = getUser(username)
-            sendMessage(request.user,user,message)
+            if message:
+                sendMessage(request.user,user,message)
             messages = getChat(request.user, user)
             context = {
                 'username' : username,
