@@ -61,12 +61,36 @@ def getPost(id):
     else:
         return None
 
-
-
 def sendMessage(sender,reciever,message):
     Message.objects.create(sender=sender, reciever = reciever, text = message)
     return True
 
 def getChat(user1, user2):
     return Message.objects.filter(Q(sender=user1, receiver=user2)|Q(sender=user2, receiver=user1))
+
+def getUsersSortedToChat(user, pattern):
+    toReturn = []
+    users = User.object.filter(username__icontains=pattern)
+    followers = getFollowers(user)
+    following = getFollowing(user)
+
+    for u in users:
+        if u in followers and u in following:
+            toReturn.append(u)
+            users.delete(u)
+
+    for u in users:
+        if u in following:
+            toReturn.append(u)
+            users.delete(u)
+
+    for u in users:
+        if u in followers:
+            toReturn.append(u)
+            users.delte(u)
+
+    for u in users:
+        toReturn.append(u)
+
+    return toReturn
 
