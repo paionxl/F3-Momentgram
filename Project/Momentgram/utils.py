@@ -1,12 +1,11 @@
-from .models import Post, Profile, Follow
+from .models import Post, Profile, Follow, Message
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 def createPost(description, owner, image):
-    newPost = Post.objects.create(user=owner, image=image)
-    if description != "":
-        newPost.description = description
-    newPost.save()
+    #Need to check if it works creating a post without description
+    newPost = Post.objects.create(user=owner, image=image, description = description)
     return newPost
 
 
@@ -61,3 +60,13 @@ def getPost(id):
         return Post.objects.filter(id=id)[0]
     else:
         return None
+
+
+
+def sendMessage(sender,reciever,message):
+    Message.objects.create(sender=sender, reciever = reciever, text = message)
+    return True
+
+def getChat(user1, user2):
+    return Message.objects.filter(Q(sender=user1, receiver=user2)|Q(sender=user2, receiver=user1))
+
