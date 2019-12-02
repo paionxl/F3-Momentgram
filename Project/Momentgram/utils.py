@@ -61,8 +61,19 @@ def getPost(id):
     else:
         return None
 
-def sendMessage(sender,receiver,message):
-    Message.objects.create(sender=sender, reciever = receiver, text = message)
+def getTimeline(username):
+    if getFollowing(username):
+        posts = []
+        for user in getFollowing(username):
+            for post in getUserPosts(user):
+                posts.append(post)
+        return sorted(posts, key=lambda x: x.date, reverse=True)
+    else:
+        return None
+
+
+def sendMessage(sender,reciever,message):
+    Message.objects.create(sender=sender, reciever = reciever, text = message)
     return True
 
 def getChat(user1, user2):
@@ -109,3 +120,4 @@ def getChatPreviews(user):
         return message_previews
     else:
         return None
+
