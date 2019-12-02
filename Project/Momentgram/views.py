@@ -198,7 +198,8 @@ def manage_friend(request, username, index = 1):
 def search_users(request, isProfile, searched ="", index = 1):
     if 'searched' in request.GET :
         searched = request.GET.get('searched')
-    users = [x.username for x in User.objects.filter(username__contains = searched)]
+    sorted = getUsersSorted(request.user, searched)
+    users = [x.username for x in sorted]
     p = Paginator(users, 9)
     maxPage = p.num_pages
     page = index
@@ -214,19 +215,19 @@ def chat( request, username=""):
     if username:
         if( request.method == 'GET' ):
             user = getUser(username)
-            # get messages beetween request.user and user
+            messages = getChat(request.user, user)
             context = {
-                'username' : username
-                # 'messages' : messages[50]
+                'username' : username,
+                'messages' : messages[:50]
             }
-            # return render(request,'Momentgram/chat.html', context)
+            return render(request,'Momentgram/chat.html', context)
         if ( request.method == 'POST' ):
             user = getUser(username)
-            # crear mensaje
-            # get messages beetween request.user and user
+            sendMessage(request.user,user,message)
+            messages = getChat(request.user, user)
             context = {
-                'username' : username
-                # 'messages' : messages[50]
+                'username' : username,
+                'messages' : messages[:50]
             }
             return render( request, 'Momentgram/chat.html', context)
     else:

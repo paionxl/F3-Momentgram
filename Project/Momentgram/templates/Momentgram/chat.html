@@ -109,7 +109,7 @@
         </div>
         <div class="messages" id="messages">
             {% for message in messages %}
-                {% if message.owner = user.name %}
+                {% if message.sender.username == user.username %}
                 <div class="messageContainer">
                     <div class="ownMessage">
                         {{message.text}}
@@ -126,9 +126,9 @@
             {% endfor %}
         </div>
         <div class="send">
-            <form action="{% url 'search_users' %}" method="GET" style="border: none" class="send">
+            <form action="{% url 'chat' username %}" method="POST" style="border: none" class="send">
                 {% csrf_token %}
-                <input type="text" placeholder="TypeMessage" name="sendMessage" class="message-input">
+                <input type="text" placeholder="TypeMessage" name="message" class="message-input">
                 <button type="submit" class="btn btn-primary send-button" disabled="disabled">Send</button>
             </form>
         </div>

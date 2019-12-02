@@ -9,8 +9,10 @@
         <div class="login-container" style="margin-top: 20px;">
             
             <div class="container1">
-                {% if isProfile %}
+                {% if not isProfile %}
                     <a href="{% url 'show_profile' user %}" style="text-align: center"><p>{{user}} </p></a>
+                {% else %}
+                    <a href="{% url 'chat' user %}" style="text-align: center"><p>{{user}} </p></a>
                 {% endif %}
             </div>
         </div>         
