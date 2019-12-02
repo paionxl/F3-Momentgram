@@ -195,20 +195,19 @@ def manage_friend(request, username, index = 1):
         return HttpResponse("No such user")
 
 
-def search_users(request, searched ="", index = 1):
-    if request.method == 'GET':
-        pattern = request.GET.get('searched')
-        if not pattern:
-            pattern = searched
-
-    users = [x.username for x in User.objects.filter(username__contains = pattern)]
+def search_users(request, isProfile, searched ="", index = 1):
+    if 'searched' in request.GET :
+        searched = request.GET.get('searched')
+    sorted = getUsersSorted(request.user, searched)
+    users = [x.username for x in sorted]
     p = Paginator(users, 9)
     maxPage = p.num_pages
     page = index
     context = {
         'users' : p.page(page),
         'maxPage' : [ x+1 for x in range(maxPage)],
-        'searched' : pattern
+        'searched' : searched,
+        'isProfile' : isProfile
     }
     return render(request, 'Momentgram/searchUsers.html', context)
 
@@ -224,7 +223,27 @@ def timeline(request, index = 1):
         }
         return render(request, 'Momentgram/timeline.html', context)
 
-
+def chat( request, username=""):
+    if username:
+        if( request.method == 'GET' ):
+            user = getUser(username)
+            messages = getChat(request.user, user)
+            context = {
+                'username' : username,
+                'messages' : messages[:50]
+            }
+            return render(request,'Momentgram/chat.html', context)
+        if ( request.method == 'POST' ):
+            user = getUser(username)
+            sendMessage(request.user,user,message)
+            messages = getChat(request.user, user)
+            context = {
+                'username' : username,
+                'messages' : messages[:50]
+            }
+            return render( request, 'Momentgram/chat.html', context)
+    else:
+        return HttpResponse("No such user")
 
 
 
