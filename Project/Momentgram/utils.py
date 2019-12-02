@@ -79,9 +79,9 @@ def sendMessage(sender,reciever,message):
 def getChat(user1, user2):
     return Message.objects.filter(Q(sender=user1, receiver=user2)|Q(sender=user2, receiver=user1))
 
-def getUsersSortedToChat(user, pattern):
+def getUsersSorted(user, pattern):
     toReturn = []
-    users = User.object.filter(username__icontains=pattern)
+    users = User.objects.filter(username__icontains=pattern)
     followers = getFollowers(user)
     following = getFollowing(user)
 

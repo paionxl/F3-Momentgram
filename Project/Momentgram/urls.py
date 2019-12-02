@@ -18,10 +18,11 @@ urlpatterns = [
     url(r'^view_post/(?P<id>.*)/$', views.view_post, name='view_post'),
     url(r'^manage_friend/(?P<username>.*)/(?P<index>.*)/$', views.manage_friend, name='manage_complete'),
     url(r'^manage_friend/(?P<username>.*)/$', views.manage_friend, name='manage'),
-    url(r'^search_users/$', views.search_users, name='search_users'),
-    url(r'^search_users/searched=(?P<searched>.*)/(?P<index>.*)/$', views.search_users, name='search_users_complete'),
+    url(r'^search_users=(?P<isProfile>.*)/searched=(?P<searched>.*)/(?P<index>.*)/$', views.search_users, name='search_users_complete'),
+    url(r'^search_users=(?P<isProfile>.*)/$', views.search_users, name='search_users'),
     url(r'^profile=(?P<username>.*)/(?P<index>.*)/$', views.show_profile, name='show_profile_complete'),
-    url(r'^profile=(?P<username>.*)/$', views.show_profile, name='show_profile')
+    url(r'^profile=(?P<username>.*)/$', views.show_profile, name='show_profile'),
+    url(r'^chat/(?P<username>.*)$', views.chat, name='chat')
 
 
     #path('admin/', admin.site.urls),
