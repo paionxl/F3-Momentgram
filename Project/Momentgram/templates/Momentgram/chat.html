@@ -105,65 +105,47 @@
 <div style="background-color: white;">
     <div class="chat">
         <div class="head">
-           Chat with Potato
+           Chat with {{username}}
         </div>
-        <div class="messages">
-            <div class="messageContainer">
-                <div class="ownMessage">
-                    What day of the week do potatoes hate the most?
+        <div class="messages" id="messages">
+            {% for message in messages %}
+                {% if message.owner = user.name %}
+                <div class="messageContainer">
+                    <div class="ownMessage">
+                        {{message.text}}
+                    </div>
                 </div>
-            </div>
-            <div class="messageContainer">
-
-                <div class="receivedMessage">
-                    <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
-                    Fry-day
+                {% else %}
+                <div class="messageContainer">
+                    <div class="receivedMessage">
+                        <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
+                        {{message.text}}
+                    </div>
                 </div>
-            </div>
-            <div class="messageContainer">
-                <div class="ownMessage">
-                    Who was the potato’s favorite author?
-                </div>
-            </div>
-            <div class="messageContainer">
-
-                <div class="receivedMessage">
-                    <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
-                    Edgar Allen Poe-tato.
-                </div>
-            </div>
-            <div class="messageContainer">
-
-                <div class="receivedMessage">
-                    <img style="width: 50px; border-radius: 100%;" src="https://st2.depositphotos.com/1003591/7970/i/950/depositphotos_79702338-stock-photo-potato-with-funny-face.jpg">
-                    What’s the difference between humans and bullets?
-                </div>
-            </div>
-            <div class="messageContainer">
-                <div class="ownMessage">
-                    Humans miss John Lennon.
-                </div>
-            </div>
-            <div class="messageContainer">
-                <div class="ownMessage">
-                    Humans miss John Lennon.
-                </div>
-            </div>
-            <div class="messageContainer">
-                <div class="ownMessage">
-                    Humans miss John Lennon.
-                </div>
-            </div>
-            <div class="messageContainer">
-                <div class="ownMessage">
-                    Humans miss John Lennon.
-                </div>
-            </div>
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="send">
-            <input type="text" name="fname" id="message-content" class="message-input">
-            <button type="button" class="btn btn-primary send-button">Send</button>
+            <form action="{% url 'search_users' %}" method="GET" style="border: none" class="send">
+                {% csrf_token %}
+                <input type="text" placeholder="TypeMessage" name="sendMessage" class="message-input">
+                <button type="submit" class="btn btn-primary send-button" disabled="disabled">Send</button>
+            </form>
         </div>
     </div>
 </div>
 {% endblock %}
+<script>
+    window.onload=function () {
+        var objDiv = document.getElementById("messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+    $('.message-input').onkeyup(function(){
+        if(this.innerText.length != 0){
+            $('.message-input').setProperty("disabled","");
+        }
+        else {
+            $('.message-input').setProperty("disabled","disabled");
+        }
+    });
+</script>
