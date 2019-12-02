@@ -61,8 +61,8 @@ def getPost(id):
     else:
         return None
 
-def sendMessage(sender,reciever,message):
-    Message.objects.create(sender=sender, reciever = reciever, text = message)
+def sendMessage(sender,receiver,message):
+    Message.objects.create(sender=sender, reciever = receiver, text = message)
     return True
 
 def getChat(user1, user2):
@@ -94,3 +94,18 @@ def getUsersSortedToChat(user, pattern):
 
     return toReturn
 
+#Given a user, it gets all the messages sent and received by him, orders them and
+#returns the last message that we have with the other user
+def getChatPreviews(user):
+    if Message.objects.filter(Q(sender=user) | Q(receiver=user)):
+        sorted_messages = Message.objects.filter(Q(sender=user) | Q(receiver=user)).order_by('date')
+        users = set()
+        message_previews = []
+        for message in sorted_messages:
+            other_user = message.sender if user == message.receiver else message.receiver
+            if other_user not in users:
+                message_previews.append((other_user,message))
+                users.add(user)
+        return message_previews
+    else:
+        return None
