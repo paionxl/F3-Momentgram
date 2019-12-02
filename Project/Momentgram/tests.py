@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from Momentgram.models import Post
+from .models import Post,Message
+from django.db.models import Q
+
 
 
 # Create your tests here.
@@ -47,6 +49,7 @@ class PostTestCase(TestCase):
         self.assertEqual(expected_object_description, "test description")
         self.assertEqual(expected_object_user, "Albert")
         self.assertEqual(expected_object_image, "media/images/GoldenGateBridge_BakerBeach_MC.jpg")
+
 
 
 class FollowTestCase(TestCase):
