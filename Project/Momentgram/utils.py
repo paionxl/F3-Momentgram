@@ -61,6 +61,18 @@ def getPost(id):
     else:
         return None
 
+
+def getTimeline(username):
+    if getFollowing(username):
+        posts = []
+        for user in getFollowing(username):
+            for post in getUserPosts(user):
+                posts.append(post)
+        return sorted(posts, key=lambda x: x.date, reverse=True)
+    else:
+        return None
+
+
 def sendMessage(sender,reciever,message):
     Message.objects.create(sender=sender, reciever = reciever, text = message)
     return True
