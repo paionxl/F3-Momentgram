@@ -88,17 +88,17 @@ def getUsersSorted(user, pattern):
     for u in users:
         if u in followers and u in following:
             toReturn.append(u)
-            users.delete(u)
+            users = users.exclude(username=u)
 
     for u in users:
         if u in following:
             toReturn.append(u)
-            users.delete(u)
+            users = users.exclude(username=u)
 
     for u in users:
         if u in followers:
             toReturn.append(u)
-            users.delete(u)
+            users = users.exclude(username=u)
 
     for u in users:
         toReturn.append(u)
