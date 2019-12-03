@@ -237,9 +237,14 @@ def chat( request, username=""):
         if( request.method == 'GET' ):
             user = getUser(username)
             messages = getChat(request.user, user)
+            if(len(messages)>30):
+                start = len(messages) - 30
+            else:
+                start = 0
+
             context = {
                 'username' : username,
-                'messages' : messages[:50]
+                'messages' : messages[start:]
             }
             return render(request,'Momentgram/chat.html', context)
         if ( request.method == 'POST' ):
@@ -249,9 +254,13 @@ def chat( request, username=""):
             if message:
                 sendMessage(request.user,user,message)
             messages = getChat(request.user, user)
+            if(len(messages)>30):
+                start = len(messages) - 30
+            else:
+                start = 0
             context = {
                 'username' : username,
-                'messages' : messages[:50]
+                'messages' : messages[start:]
             }
             return render( request, 'Momentgram/chat.html', context)
     else:
