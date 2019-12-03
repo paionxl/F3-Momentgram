@@ -118,17 +118,17 @@ def show_profile(request, username, index = 1):
     maxPage = p.num_pages
     page = index
     context = {
-        'followed' : followed,
-        'yourProfile' : yourProfile,
-        'username' : user.username,
-        'n_posts' : len(getUserPosts(user)),
-        'n_followed' : len(getFollowing(user)),
-        'n_followers' : len(getFollowers(user)),
-        'description' : (Profile.objects.filter(user=user)[0]).bio,
-        'fullName' : user.first_name + " " + user.last_name,
-        'posts' : p.page(page),
-        'maxPage' : [ x+1 for x in range(maxPage)],
-        'index' : index
+         'followed' : followed,
+         'yourProfile' : yourProfile,
+         'username' : user.username,
+         'n_posts' : len(getUserPosts(user)),
+         'n_followed' : len(getFollowing(user)),
+         'n_followers' : len(getFollowers(user)),
+         'description' : (Profile.objects.filter(user=user)[0]).bio,
+         'fullName' : user.first_name + " " + user.last_name,
+         'posts' : p.page(page),
+         'maxPage' : [ x+1 for x in range(maxPage)],
+         'index' : index
     }
     return render(request, 'Momentgram/profile.html', context)
 
@@ -211,6 +211,19 @@ def search_users(request, isProfile, searched ="", index = 1):
     }
     return render(request, 'Momentgram/searchUsers.html', context)
 
+def timeline(request, index = 1):
+    if request.method == "GET":
+        posts = getTimeline(request.user)
+        p = Paginator(posts, 9)
+        print(p.num_pages)
+        maxPage = p.num_pages
+        context = {
+            'posts' : p.page(index),
+            'maxPage' : [ x+1 for x in range(maxPage)],
+            'index' : index
+        }
+        return render(request, 'Momentgram/timeline.html', context)
+
 def chat( request, username=""):
     if username:
         if( request.method == 'GET' ):
@@ -222,8 +235,11 @@ def chat( request, username=""):
             }
             return render(request,'Momentgram/chat.html', context)
         if ( request.method == 'POST' ):
+            if 'message' in request.POST :
+                        message = request.POST.get('message')
             user = getUser(username)
-            sendMessage(request.user,user,message)
+            if message:
+                sendMessage(request.user,user,message)
             messages = getChat(request.user, user)
             context = {
                 'username' : username,

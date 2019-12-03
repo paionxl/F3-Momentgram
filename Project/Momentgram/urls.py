@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^search_users=(?P<isProfile>.*)/$', views.search_users, name='search_users'),
     url(r'^profile=(?P<username>.*)/(?P<index>.*)/$', views.show_profile, name='show_profile_complete'),
     url(r'^profile=(?P<username>.*)/$', views.show_profile, name='show_profile'),
+    url(r'^timeline/index=(?P<index>.*)/$', views.timeline, name='full_timeline'),
+    url(r'^timeline/$', views.timeline, name='timeline'),
     url(r'^chat/(?P<username>.*)$', views.chat, name='chat')
 
 
