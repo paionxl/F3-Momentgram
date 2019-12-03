@@ -1,0 +1,41 @@
+{% extends 'Momentgram/base.html' %}
+{% block content %}
+
+{% load static %}
+<div >    
+    <div style="margin-bottom: 10px;">
+    {% if users%}
+     {% for user in users %}
+        <div class="login-container" style="margin-top: 20px;">
+                <div class="col-4" style="background-color: white; padding: 10px;">
+                    <img id="image" class="profile_image" src="https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Bearded_Man-17-512.png"/>
+                </div>
+                <div class="col-2" style="background-color: white; padding: 20px">
+                    <a href="#" style="text-align: center"><p>{{user}} </p></a>
+                    
+                </div>
+            
+        </div>         
+      {% endfor %}
+    {% else %}
+
+        <div class="login-container">
+            <h1 style="margin-top: 2%; margin-left: 20%; color: rgba(0, 0, 0, 0.6); font-size: 30px;">No matched Friends.</h1>
+        </div>
+      {% endif %}
+
+     </div>
+    
+    <div class="center">
+        <div class="pagination">
+        {% for index in maxPage %}
+            <a href="{% url 'search_users_complete' searched index %}">{{index}}</a>
+        {% endfor %}
+        </div>
+    </div>
+    
+</div>
+<script>
+ 
+</script>
+{% endblock %}

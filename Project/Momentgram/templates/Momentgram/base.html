@@ -194,9 +194,18 @@
             </li>
             <!--<li class="nav-item">
                 <a class="nav-link" href="#">See post</a>
-            </li>-->
+            </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
+            </li>-->
+            <li class="search-container" >
+                <form action="#" method="GET" style="border: none">
+                  {% csrf_token %}
+                    <input type="text" placeholder="Search Friends" name="searched" style="background: rgba(255,255,255,.5); width: auto; padding: 6px; font-size: 10px; border:none; ">
+                
+                    <button  type="submit"> <i class="fa fa-group"></i> </button>
+                    
+                </form>
             </li>
         </ul>
         <ul class="navbar-nav">
