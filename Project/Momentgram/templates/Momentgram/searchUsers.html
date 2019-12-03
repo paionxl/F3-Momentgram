@@ -9,7 +9,7 @@
         <div class="login-container" style="margin-top: 20px;">
             
             <div class="container1">
-                {% if not isProfile %}
+                {% if isProfile %}
                     <a href="{% url 'show_profile' user %}" style="text-align: center"><p>{{user}} </p></a>
                 {% else %}
                     <a href="{% url 'chat' user %}" style="text-align: center"><p>{{user}} </p></a>
@@ -29,7 +29,11 @@
     <div class="center">
         <div class="pagination">
         {% for index in maxPage %}
-            <a href="{% url 'search_users_complete' isProfile searched index %}">{{index}}</a>
+            {% if isProfile %}
+                <a href="{% url 'search_users_complete' 1 searched index %}">{{index}}</a>
+            {% else %}
+                <a href="{% url 'search_users_complete' 0 searched index %}">{{index}}</a>
+            {% endif %}
         {% endfor %}
         </div>
     </div>

@@ -195,20 +195,28 @@ def manage_friend(request, username, index = 1):
         return HttpResponse("No such user")
 
 
-def search_users(request, isProfile, searched ="", index = 1):
-    if 'searched' in request.GET :
+def search_users(request, isProfile='0', searched ="", index = 1):
+    if 'searched' in request.GET:
         searched = request.GET.get('searched')
     sorted = getUsersSorted(request.user, searched)
     users = [x.username for x in sorted]
     p = Paginator(users, 9)
     maxPage = p.num_pages
     page = index
-    context = {
-        'users' : p.page(page),
-        'maxPage' : [ x+1 for x in range(maxPage)],
-        'searched' : searched,
-        'isProfile' : isProfile
-    }
+    if isProfile=='1':
+        context = {
+            'users' : p.page(page),
+            'maxPage' : [ x+1 for x in range(maxPage)],
+            'searched' : searched,
+            'isProfile' : isProfile
+        }
+    else:
+        context = {
+            'users' : p.page(page),
+            'maxPage' : [ x+1 for x in range(maxPage)],
+            'searched' : searched
+        }
+
     return render(request, 'Momentgram/searchUsers.html', context)
 
 def timeline(request, index = 1):

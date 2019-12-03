@@ -199,7 +199,7 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>-->
             <li class="search-container" >
-                <form action="#" method="GET" style="border: none">
+                <form action="{% url 'search_users' isProfile=0 %}" method="GET" style="border: none">
                   {% csrf_token %}
                     <input type="text" placeholder="Search Friends" name="searched" style="background: rgba(255,255,255,.5); width: auto; padding: 6px; font-size: 10px; border:none; ">
                 
@@ -219,7 +219,7 @@
             </li>
 
             <li class="search-container" >
-                <form action="{% url 'search_users' isProfile=False %}" method="GET" style="border: none">
+                <form action="{% url 'search_users' isProfile=1 %}" method="GET" style="border: none">
                   {% csrf_token %}
                     <input type="text" placeholder="Search" name="searched" style="background: rgba(255,255,255,.5); width: auto; padding: 6px; font-size: 10px; border:none; ">
                 
