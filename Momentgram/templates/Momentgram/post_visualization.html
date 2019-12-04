@@ -6,8 +6,8 @@
 <div>
      <div class="row" style="padding: 10px 150px">
         <div class="col-8" style="background-color: white; padding: 10px;">
-
-            <img id="image" style=" max-width: 100%;" src="/media/{{image_name}}/"/>
+            {% load static %}
+            <img id="image" style=" max-width: 100%;" src="{% static image_name %}"/>
         </div>
         <div class="col-4" style="background-color: white; padding: 20px">
             <p id="userName" style="font-size: 14px; font-weight: bold">{{ username }}</p>
