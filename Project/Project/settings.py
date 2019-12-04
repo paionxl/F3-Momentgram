@@ -84,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'momentgram',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'USER': 'lpsbwdyglkdscq',
+        'PASSWORD': '8f0eebc0afdeac698d84889f1b842818fef659f1557f5e6d43b670f416f0ef3b',
+        'HOST': 'ec2-54-247-92-167.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
