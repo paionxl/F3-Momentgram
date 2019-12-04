@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^search_users/searched=(?P<searched>.*)/(?P<index>.*)/$', views.search_users, name='search_users_complete'),
     url(r'^profile=(?P<username>.*)/(?P<index>.*)/$', views.show_profile, name='show_profile_complete'),
     url(r'^profile=(?P<username>.*)/$', views.show_profile, name='show_profile'),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media'}),
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media'}),
 
 
     #path('admin/', admin.site.urls),
