@@ -34,7 +34,7 @@ class Follow(models.Model):
 
 class Post(models.Model):
     description = models.TextField(max_length=500, blank=True)
-    image = models.ImageField(upload_to='media/')
+    image = models.ImageField(upload_to='images/')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
