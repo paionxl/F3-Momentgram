@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from cloudinary.models import CloudinaryField
 
 
 class Profile(models.Model):
@@ -34,7 +35,7 @@ class Follow(models.Model):
 
 class Post(models.Model):
     description = models.TextField(max_length=500, blank=True)
-    image = models.ImageField(upload_to='images/')
+    image = CloudinaryField('image')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)

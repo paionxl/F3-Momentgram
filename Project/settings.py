@@ -120,6 +120,8 @@ cloudinary.config(
     api_secret = "z9hP2yCJhfv8IB8BVk3vfW6LNMM"
 )
 
+CLOUDINARY_URL='cloudinary://873387182127185:z9hP2yCJhfv8IB8BVk3vfW6LNMM@patatagram'
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
